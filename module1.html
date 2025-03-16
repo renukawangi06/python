@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Course - Module 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #3d0d1dff, #6d2932);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        .module-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: black;
+        }
+        .module-box:hover {
+            transform: scale(1.07);
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        .topic-box {
+            background: #eee;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .code-box {
+            width: 100%;
+            height: 120px;
+            margin-top: 15px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            background: #f4f4f4;
+            resize: none;
+        }
+        .syntax-button {
+            background: #dcdcdc;
+            color: black;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 1rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .syntax-button:hover {
+            background: #e6e6e6;
+            transform: scale(1.08);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .progress {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        .locked {
+            opacity: 0.6;
+            pointer-events: none;
+            background: rgba(255, 255, 255, 0.5);
+        }
+        .completed {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python Course - Module 1</h1>
+        <p>Learn about variables in Python</p>
+
+        <div class="module-box" id="module1">
+            <h2>Module 1: Variables in Python</h2>
+
+            <div class="topic-box">
+                <h3>Dynamic Typing</h3>
+                <p>Variables do not need to be declared with any particular type, and can even change type after they have been set.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Dynamic Typing</h3>
+                <code>
+                    x = 4  # x is of type int<br>
+                    x = "Sally"  # x is now of type str<br>
+                    print(x)
+                </code>
+            </div>
+
+            <div class="topic-box">
+                <h3>Checking Data Types</h3>
+                <p>You can get the data type of a variable with the type() function.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Using type()</h3>
+                <code>
+                    x = 5<br>
+                    y = "John"<br>
+                    print(type(x))<br>
+                    print(type(y))
+                </code>
+            </div>
+
+            <div class="topic-box">
+                <h3>String Declarations</h3>
+                <p>String variables can be declared either by using single or double quotes.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: String Quotes</h3>
+                <code>
+                    x = "John"  # is the same as<br>
+                    x = 'John'
+                </code>
+            </div>
+
+            <div class="topic-box">
+                <h3>Case Sensitivity</h3>
+                <p>Variable names are case-sensitive.</p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Case Sensitivity</h3>
+                <code>
+                    a = 4<br>
+                    A = "Sally"  # A will not overwrite a
+                </code>
+            </div>
+            <div class="topic-box">
+                <h3>2. Variable Names: Rules and Conventions</h3>
+                <p>
+                    Variable names can be short or descriptive. They must follow specific rules:
+                    <ul>
+                        <li>Start with a letter or underscore.</li>
+                        <li>Cannot start with a number.</li>
+                        <li>Contain only alphanumeric characters and underscores.</li>
+                        <li>Are case-sensitive.</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Legal and Illegal Variable Names</h3>
+                <p>
+                    Legal: <code>myvar, my_var, _my_var, myVar, MYVAR, myvar2</code><br>
+                    Illegal: <code>2myvar, my-var, my var</code>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Multi-Word Variable Names</h3>
+                <p>
+                    Use conventions for readability:
+                    <ul>
+                        <li>Camel Case: <code>myVariableName</code></li>
+                        <li>Pascal Case: <code>MyVariableName</code></li>
+                        <li>Snake Case: <code>my_variable_name</code></li>
+                    </ul>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Python User Input: input() and raw_input()</h3>
+                <p>
+                    Python allows user input. Use <code>input()</code> in Python 3.6+ and <code>raw_input()</code> in Python 2.7.
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: User Input</h3>
+                <p>
+                    Python 3.6+: <code>username = input("Enter username:"); print("Username is: " + username)</code><br>
+                    Python 2.7: <code>username = raw_input("Enter username:"); print("Username is: " + username)</code>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Assigning Multiple Values</h3>
+                <p>
+                    Many values to multiple variables: <code>x, y, z = "Orange", "Banana", "Cherry"</code><br>
+                    One value to multiple variables: <code>x = y = z = "Orange"</code><br>
+                    Unpacking a collection: <code>fruits = ["apple", "banana", "cherry"]; x, y, z = fruits</code>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Outputting Variables: print()</h3>
+                <p>
+                    Use <code>print()</code> to output variables. Separate with commas or use the <code>+</code> operator.
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Outputting Variables</h3>
+                <p>
+                    <code>print("Python is awesome")</code><br>
+                    <code>print("Python", "is", "awesome")</code><br>
+                    <code>print("Python " + "is " + "awesome")</code><br>
+                    <code>print(5 + 10)</code><br>
+    <code>print(5, "John")</code> (Correct way to combine different types)
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Global Variables</h3>
+                <p>
+                    Global variables are accessible outside and inside functions.
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Global Variables</h3>
+                <p>
+                    <code>x = "awesome"; def myfunc(): print("Python is " + x); myfunc()</code>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>The global Keyword</h3>
+                <p>
+                    Use <code>global</code> to create or modify global variables inside functions.
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Using global</h3>
+                <p>
+                    <code>def myfunc(): global x; x = "fantastic"; myfunc(); print("Python is " + x)</code>
+                </p>
+            </div>
+
+            <textarea class="code-box" id="code-input" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(1)">Check Syntax</button>
+            <p id="feedback1"></p>
+            <div class="progress">Progress: <span id="progress1">0%</span></div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module2">
+            <h2>Module 2 - Coming Soon</h2>
+            <p>Complete Module 1 to unlock this!</p>
+        <h1>Python Course - Module 2</h1>
+        <p>Learn about Data Types and Numbers in Python</p>
+
+        <div class="module-box" id="module2">
+            <h2>Module 2: Python Data Types and Numbers</h2>
+
+            <div class="topic-box">
+                <h3>Built-in Data Types</h3>
+                <p>Python has various built-in data types, including: <code>str</code>, <code>int</code>, <code>float</code>, <code>complex</code>, <code>list</code>, <code>tuple</code>, <code>dict</code>, <code>set</code>, <code>bool</code>, and more.<br>
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>Getting the Data Type: type()</h3>
+                <p>Use <code>type()</code> to find the data type of a variable.<br></p>
+                <code>x = 5;<br> print(type(x))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Setting Data Types: Implicitly</h3>
+                <p>Data type is set when you assign a value.<br></p>
+                <code>x = "Hello";<br> x = 20;<br> x = 20.5;<br> x = 1j;<br> x = [1,2,3];<br> x = (1,2,3);<br> x = {"a":1};<br> x = {1,2,3};<br> x = True;<br> x = b"Hello";<br> x = bytearray(5);<br> x = memoryview(bytes(5));<br> x = None</code>
+            </div>
+            <div class="topic-box">
+                <h3>Setting Data Types: Explicitly</h3>
+                <p>Use constructor functions to specify data types.<br></p>
+                <code>x = str("Hello");<br> x = int(20);<br> x = float(20.5);<br> x = complex(1j);<br> x = list((1,2,3));<br> x = tuple((1,2,3));<br> x = dict(a=1);<br> x = set((1,2,3));<br> x = bool(5);<br> x = bytes(5);<br> x = bytearray(5);<br> x = memoryview(bytes(5))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Python Numbers: int, float, complex</h3>
+                <p>Python has three numeric types: <code>int</code>, <code>float</code>, and <code>complex</code>.<br></p>
+            </div>
+            <div class="topic-box">
+                <h3>Example: Numeric Types</h3>
+                <code>x = 1;<br> y = 2.8;<br> z = 1j;<br> print(type(x));<br> print(type(y));<br> print(type(z))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Type Conversion</h3>
+                <p>Convert numeric types using <code>int()</code>, <code>float()</code>, <code>complex()</code>.<br></p>
+                <code>x = 1;<br> y = 2.8;<br> z = 1j;<br> a = float(x);<br> b = int(y);<br> c = complex(x);<br> print(a, b, c)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Random Numbers</h3>
+                <p>Use the <code>random</code> module to generate random numbers.<br></p>
+                <code>import random;<br> print(random.randrange(1, 10))</code>
+            </div>
+
+            <textarea class="code-box" id="code-input2" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(2)">Check Syntax</button>
+            <p id="feedback2"></p>
+            <div class="progress">Progress: <span id="progress2">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module3">
+            <h2>Module 3 - Coming Soon</h2>
+            <p>Complete Module 2 to unlock this!</p>
+        <p>Learn about Python Casting</p>
+
+        <div class="module-box" id="module3">
+            <h2>Module 3: Python Casting</h2>
+
+            <div class="topic-box">
+                <h3>Specify a Variable Type</h3>
+                <p>Casting allows you to specify a type for a variable using constructor functions.</p>
+            </div>
+            <div class="topic-box">
+                <h3>int() - Constructing Integers</h3>
+                <p><code>int()</code> creates an integer from integer, float (removes decimals), or string literals (if string is a whole number).<br></p>
+                <code>x = int(1);<br> y = int(2.8);<br> z = int("3")</code>
+            </div>
+            <div class="topic-box">
+                <h3>float() - Constructing Floats</h3>
+                <p><code>float()</code> creates a float from integer, float, or string literals (if string is float or integer).<br></p>
+                <code>x = float(1);<br> y = float(2.8);<br> z = float("3");<br> w = float("4.2")</code>
+            </div>
+            <div class="topic-box">
+                <h3>str() - Constructing Strings</h3>
+                <p><code>str()</code> creates a string from various data types, including strings, integers, and floats.<br></p>
+                <code>x = str("s1");<br> y = str(2);<br> z = str(3.0)</code>
+            </div>
+
+            <textarea class="code-box" id="code-input3" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(3)">Check Syntax</button>
+            <p id="feedback3"></p>
+            <div class="progress">Progress: <span id="progress3">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module4">
+            <h2>Module 4 - Coming Soon</h2>
+            <p>Complete Module 3 to unlock this!</p>
+        <p>Learn about Python Strings</p>
+
+        <div class="module-box" id="module4">
+            <h2>Module 4: Python Strings</h2>
+
+            <div class="topic-box">
+                <h3>Strings</h3>
+                <p>Strings are surrounded by single or double quotes.<br>'hello' is the same as "hello".<br></p>
+                <code>print("Hello")<br>print('Hello')</code>
+            </div>
+            <div class="topic-box">
+                <h3>Assigning Strings to Variables</h3>
+                <p>Assign strings with the variable name, equals sign, and the string.<br></p>
+                <code>a = "Hello"<br>print(a)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Multiline Strings</h3>
+                <p>Use three quotes for multiline strings.<br></p>
+                <code>a = """Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit,<br>sed do eiusmod tempor incididunt<br>ut labore et dolore magna aliqua."""<br>print(a)<br><br>a = '''Lorem ipsum dolor sit amet,<br>consectetur adipiscing elit,<br>sed do eiusmod tempor incididunt<br>ut labore et dolore magna aliqua.'''<br>print(a)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Strings as Arrays</h3>
+                <p>Strings are arrays of bytes representing Unicode characters. Use square brackets to access elements.<br></p>
+                <code>a = "Hello, World!"<br>print(a[1])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Looping Through a String</h3>
+                <p>Loop through characters with a for loop.<br></p>
+                <code>for x in "banana":<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>String Length</h3>
+                <p>Use <code>len()</code> to get string length.<br></p>
+                <code>a = "Hello, World!"<br>print(len(a))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Check String: in</h3>
+                <p>Use <code>in</code> to check if a phrase is present.<br></p>
+                <code>txt = "The best things in life are free!"<br>print("free" in txt)<br><br>if "free" in txt:<br>print("Yes, 'free' is present.")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Check String: not in</h3>
+                <p>Use <code>not in</code> to check if a phrase is NOT present.<br></p>
+                <code>txt = "The best things in life are free!"<br>print("expensive" not in txt)<br><br>if "expensive" not in txt:<br>print("No, 'expensive' is NOT present.")</code>
+            </div>
+
+            <textarea class="code-box" id="code-input4" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(4)">Check Syntax</button>
+            <p id="feedback4"></p>
+            <div class="progress">Progress: <span id="progress4">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module5">
+            <h2>Module 5 - Coming Soon</h2>
+            <p>Complete Module 4 to unlock this!</p>
+        <p>Learn about Python Strings</p>
+       <h1>Python Course - Module 5</h1>
+        <p>Learn about Slicing Strings in Python</p>
+
+        <div class="module-box" id="module5">
+            <h2>Module 5: Slicing Strings</h2>
+
+            <div class="topic-box">
+                <h3>Slicing</h3>
+                <p>Use slice syntax to return a range of characters.<br>Specify start and end indexes separated by a colon.<br></p>
+                <code>b = "Hello, World!"<br>print(b[2:5])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Slice From the Start</h3>
+                <p>Omit the start index to slice from the beginning.<br></p>
+                <code>b = "Hello, World!"<br>print(b[:5])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Slice To the End</h3>
+                <p>Omit the end index to slice to the end.<br></p>
+                <code>b = "Hello, World!"<br>print(b[2:])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Negative Indexing</h3>
+                <p>Use negative indexes to slice from the end.<br></p>
+                <code>b = "Hello, World!"<br>print(b[-5:-2])</code>
+            </div>
+
+            <textarea class="code-box" id="code-input5" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(5)">Check Syntax</button>
+            <p id="feedback5"></p>
+            <div class="progress">Progress: <span id="progress5">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+        <div class="module-box locked" id="module6">
+            <h2>Module 6 - Coming Soon</h2>
+            <p>Complete Module 5 to unlock this!</p>
+        <h1>Python Course - Module 6</h1>
+        <p>Learn about Modifying Strings in Python</p>
+
+        <div class="module-box" id="module6">
+            <h2>Module 6: Modify Strings</h2>
+
+            <div class="topic-box">
+                <h3>Upper Case</h3>
+                <p>The <code>upper()</code> method returns the string in upper case.<br></p>
+                <code>a = "Hello, World!"<br>print(a.upper())</code>
+            </div>
+            <div class="topic-box">
+                <h3>Lower Case</h3>
+                <p>The <code>lower()</code> method returns the string in lower case.<br></p>
+                <code>a = "Hello, World!"<br>print(a.lower())</code>
+            </div>
+            <div class="topic-box">
+                <h3>Remove Whitespace</h3>
+                <p>The <code>strip()</code> method removes whitespace from the beginning or end.<br></p>
+                <code>a = " Hello, World! "<br>print(a.strip()) # returns "Hello, World!"</code>
+            </div>
+            <div class="topic-box">
+                <h3>Replace String</h3>
+                <p>The <code>replace()</code> method replaces a string with another string.<br></p>
+                <code>a = "Hello, World!"<br>print(a.replace("H", "J"))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Split String</h3>
+                <p>The <code>split()</code> method splits the string into substrings based on a separator.<br></p>
+                <code>a = "Hello, World!"<br>print(a.split(",")) # returns ['Hello', ' World!']</code>
+            </div>
+
+            <textarea class="code-box" id="code-input6" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(6)">Check Syntax</button>
+            <p id="feedback6"></p>
+            <div class="progress">Progress: <span id="progress6">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module7">
+            <h2>Module 7 - Coming Soon</h2>
+            <p>Complete Module 6 to unlock this!</p>
+        <p>Learn about String Concatenation, Formatting, Escape Characters, and Methods in Python</p>
+
+        <div class="module-box" id="module7">
+            <h2>Module 7: String Operations</h2>
+
+            <div class="topic-box">
+                <h3>String Concatenation</h3>
+                <p>Use the <code>+</code> operator to combine strings.<br></p>
+                <code>a = "Hello"<br>b = "World"<br>c = a + " " + b<br>print(c)</code>
+            </div>
+            <div class="topic-box">
+                <h3>String Format</h3>
+                <p>Use the <code>format()</code> method to insert numbers into strings.<br></p>
+                <code>age = 36<br>txt = "My name is John, and I am {}"<br>print(txt.format(age))<br><br>quantity = 3<br>itemno = 567<br>price = 49.95<br>myorder = "I want to pay {2} dollars for {0} pieces of item {1}."<br>print(myorder.format(quantity, itemno, price))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Escape Characters</h3>
+                <p>Use a backslash <code>\</code> to insert illegal characters.<br></p>
+                <code>txt = "We are the so-called \"Vikings\" from the north."<br>print(txt)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Escape Characters Table</h3>
+                <p>
+                    <code>\'</code> Single Quote<br>
+                    <code>\\</code> Backslash<br>
+                    <code>\n</code> New Line<br>
+                    <code>\t</code> Tab<br>
+                    <code>\b</code> Backspace
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>String Methods</h3>
+                <p>Python has built-in string methods (<code>upper()</code>, <code>lower()</code>, <code>strip()</code>, etc.).<br>All methods return new values; they don't change the original string.
+                </p>
+            </div>
+            <div class="topic-box">
+                <h3>String Methods List</h3>
+                <p>
+                    <code>capitalize()</code>, <code>casefold()</code>, <code>center()</code>, <code>count()</code>, <code>encode()</code>, <code>endswith()</code>, <code>expandtabs()</code>, <code>find()</code>, <code>format()</code>, <code>format_map()</code>, <code>index()</code>, <code>isalnum()</code>, <code>isalpha()</code>, <code>isdecimal()</code>, <code>isdigit()</code>, <code>isidentifier()</code>, <code>islower()</code>, <code>isnumeric()</code>, <code>isprintable()</code>, <code>isspace()</code>, <code>istitle()</code>, <code>isupper()</code>, <code>join()</code>, <code>ljust()</code>, <code>lower()</code>, <code>lstrip()</code>, <code>maketrans()</code>, <code>partition()</code>, <code>replace()</code>, <code>rfind()</code>, <code>rindex()</code>, <code>rjust()</code>, <code>rpartition()</code>, <code>rsplit()</code>, <code>rstrip()</code>, <code>split()</code>, <code>splitlines()</code>, <code>startswith()</code>, <code>strip()</code>, <code>swapcase()</code>, <code>title()</code>, <code>translate()</code>, <code>upper()</code>, <code>zfill()</code>
+                </p>
+            </div>
+
+            <textarea class="code-box" id="code-input7" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(7)">Check Syntax</button>
+            <p id="feedback7"></p>
+            <div class="progress">Progress: <span id="progress7">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="module-box locked" id="module8">
+            <h2>Module 8 - Coming Soon</h2>
+            <p>Complete Module 7 to unlock this!</p>
+        <p>Learn about Python Booleans</p>
+
+        <div class="module-box" id="module8">
+            <h2>Module 8: Python Booleans</h2>
+
+            <div class="topic-box">
+                <h3>Boolean Values</h3>
+                <p>Booleans represent True or False. You can evaluate expressions to get Boolean answers.<br></p>
+                <code>print(10 > 9)<br>print(10 == 9)<br>print(10 < 9)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Booleans in If Statements</h3>
+                <p>Booleans are used to control the flow of if statements.<br></p>
+                <code>a = 200<br>b = 33<br>if b > a:<br>    print("b is greater than a")<br>else:<br>    print("b is not greater than a")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Evaluate Values and Variables: bool()</h3>
+                <p>Use <code>bool()</code> to evaluate any value and get True or False.<br></p>
+                <code>print(bool("Hello"))<br>print(bool(15))<br><br>x = "Hello"<br>y = 15<br>print(bool(x))<br>print(bool(y))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Most Values are True</h3>
+                <p>Any string, except "", any number except 0, and any list, tuple, set, dict except empty ones, are True.<br></p>
+                <code>bool("abc")<br>bool(123)<br>bool(["apple", "cherry", "banana"])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Some Values are False</h3>
+                <p><code>False</code>, <code>None</code>, <code>0</code>, <code>""</code>, <code>()</code>, <code>[]</code>, <code>{}</code>, and objects with <code>__len__()</code> returning 0 or False are False.<br></p>
+                <code>bool(False)<br>bool(None)<br>bool(0)<br>bool("")<br>bool(())<br>bool([])<br>bool({})<br><br>class myclass():<br>    def __len__(self):<br>        return 0<br>myobj = myclass()<br>print(bool(myobj))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Functions Returning Booleans</h3>
+                <p>Functions can return Boolean values.<br></p>
+                <code>def myFunction():<br>    return True<br>print(myFunction())<br><br>if myFunction():<br>    print("YES!")<br>else:<br>    print("NO!")</code>
+            </div>
+            <div class="topic-box">
+                <h3>isinstance() Function</h3>
+                <p><code>isinstance()</code> checks if an object is of a certain data type.<br></p>
+                <code>x = 200<br>print(isinstance(x, int))</code>
+            </div>
+
+            <textarea class="code-box" id="code-input8" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(8)">Check Syntax</button>
+            <p id="feedback8"></p>
+            <div class="progress">Progress: <span id="progress8">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+        <div class="module-box locked" id="module9">
+            <h2>Module 9 - Coming Soon</h2>
+            <p>Complete Module 8 to unlock this!</p>
+        <p>Learn about Python Operators</p>
+
+        <div class="module-box" id="module9">
+            <h2>Module 9: Python Operators</h2>
+
+            <div class="topic-box">
+                <h3>Python Operators</h3>
+                <p>Operators perform operations on variables and values.<br></p>
+                <code>print(10 + 5)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Arithmetic Operators</h3>
+                <p><code>+</code> (Addition), <code>-</code> (Subtraction), <code>*</code> (Multiplication), <code>/</code> (Division), <code>%</code> (Modulus), <code>**</code> (Exponentiation), <code>//</code> (Floor division)<br></p>
+                <code>x + y, x - y, x * y, x / y, x % y, x ** y, x // y</code>
+            </div>
+            <div class="topic-box">
+                <h3>Assignment Operators</h3>
+                <p><code>=</code>, <code>+=</code>, <code>-=</code>, <code>*=</code>, <code>/=</code>, <code>%=</code>, <code>//=</code>, <code>**=</code>, <code>&=</code>, <code>|=</code>, <code>^=</code>, <code>>>=</code>, <code><<=</code><br></p>
+                <code>x = 5, x += 3, x -= 3, x *= 3, x /= 3, x %= 3, x //= 3, x **= 3, x &= 3, x |= 3, x ^= 3, x >>= 3, x <<= 3</code>
+            </div>
+            <div class="topic-box">
+                <h3>Comparison Operators</h3>
+                <p><code>==</code> (Equal), <code>!=</code> (Not equal), <code>></code> (Greater than), <code><</code> (Less than), <code>>=</code> (Greater than or equal), <code><=</code> (Less than or equal)<br></p>
+                <code>x == y, x != y, x > y, x < y, x >= y, x <= y</code>
+            </div>
+            <div class="topic-box">
+                <h3>Logical Operators</h3>
+                <p><code>and</code>, <code>or</code>, <code>not</code><br></p>
+                <code>x < 5 and x < 10, x < 5 or x < 4, not(x < 5 and x < 10)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Identity Operators</h3>
+                <p><code>is</code>, <code>is not</code><br></p>
+                <code>x is y, x is not y</code>
+            </div>
+            <div class="topic-box">
+                <h3>Membership Operators</h3>
+                <p><code>in</code>, <code>not in</code><br></p>
+                <code>x in y, x not in y</code>
+            </div>
+            <div class="topic-box">
+                <h3>Bitwise Operators</h3>
+                <p><code>&</code> (AND), <code>|</code> (OR), <code>^</code> (XOR), <code>~</code> (NOT), <code><<</code> (Zero fill left shift), <code>>></code> (Signed right shift)<br></p>
+            </div>
+
+            <textarea class="code-box" id="code-input9" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(9)">Check Syntax</button>
+            <p id="feedback9"></p>
+            <div class="progress">Progress: <span id="progress9">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="module-box locked" id="module10">
+            <h2>Module 10 - Coming Soon</h2>
+            <p>Complete Module 9 to unlock this!</p>
+        <p>Learn about Python Lists</p>
+
+        <div class="module-box" id="module10">
+            <h2>Module 10: Python Lists</h2>
+
+            <div class="topic-box">
+                <h3>Lists</h3>
+                <p>Lists store multiple items in a single variable, created using square brackets.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>List Items</h3>
+                <p>Ordered, changeable, allow duplicates, indexed (first item [0]).<br></p>
+                <code>thislist = ["apple", "banana", "cherry", "apple", "cherry"]<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>List Length</h3>
+                <p>Use <code>len()</code> to get the number of items.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>print(len(thislist))</code>
+            </div>
+            <div class="topic-box">
+                <h3>List Items - Data Types</h3>
+                <p>Lists can contain any data type (string, int, boolean) or mixed types.<br></p>
+                <code>list1 = ["apple", "banana", "cherry"]<br>list2 = [1, 5, 7, 9, 3]<br>list3 = [True, False, False]<br>list1 = ["abc", 34, True, 40, "male"]</code>
+            </div>
+            <div class="topic-box">
+                <h3>type()</h3>
+                <p>Lists are objects with the data type 'list'.<br></p>
+                <code>mylist = ["apple", "banana", "cherry"]<br>print(type(mylist))</code>
+            </div>
+            <div class="topic-box">
+                <h3>The list() Constructor</h3>
+                <p>Use <code>list()</code> to create a new list.<br></p>
+                <code>thislist = list(("apple", "banana", "cherry"))<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Access List Items</h3>
+                <p>Access items by index, negative index, or range.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>print(thislist[1])<br>print(thislist[-1])<br>thislist = ["apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"]<br>print(thislist[2:5])<br>print(thislist[:4])<br>print(thislist[2:])<br>print(thislist[-4:-1])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Check if Item Exists</h3>
+                <p>Use <code>in</code> to check if an item is present.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>if "apple" in thislist:<br>    print("Yes, 'apple' is in the fruits list")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Change List Items</h3>
+                <p>Change item values by index or range.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>thislist[1] = "blackcurrant"<br>print(thislist)<br>thislist = ["apple", "banana", "cherry", "orange", "kiwi", "mango"]<br>thislist[1:3] = ["blackcurrant", "watermelon"]<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>thislist[1:2] = ["blackcurrant", "watermelon"]<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>thislist[1:3] = ["watermelon"]<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Insert Items</h3>
+                <p>Use <code>insert()</code> to add items at a specified index.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>thislist.insert(2, "watermelon")<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Append Items</h3>
+                <p>Use <code>append()</code> to add items to the end.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>thislist.append("orange")<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Extend List</h3>
+                <p>Use <code>extend()</code> to add elements from another list or iterable.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>tropical = ["mango", "pineapple", "papaya"]<br>thislist.extend(tropical)<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>thistuple = ("kiwi", "orange")<br>thislist.extend(thistuple)<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Remove List Items</h3>
+                <p>Use <code>remove()</code>, <code>pop()</code>, <code>del</code>, or <code>clear()</code> to remove items.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>thislist.remove("banana")<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>thislist.pop(1)<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>thislist.pop()<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>del thislist[0]<br>print(thislist)<br>thislist = ["apple", "banana", "cherry"]<br>del thislist<br>thislist = ["apple", "banana", "cherry"]<br>thislist.clear()<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Loop Lists</h3>
+                <p>Loop through lists using <code>for</code> loops, index numbers, <code>while</code> loops, or list comprehension.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>for x in thislist:<br>    print(x)<br>thislist = ["apple", "banana", "cherry"]<br>for i in range(len(thislist)):<br>    print(thislist[i])<br>thislist = ["apple", "banana", "cherry"]<br>i = 0<br>while i < len(thislist):<br>    print(thislist[i])<br>    i = i + 1<br>thislist = ["apple", "banana", "cherry"]<br>[print(x) for x in thislist]</code>
+            </div>
+            <textarea class="code-box" id="code-input10" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(10)">Check Syntax</button>
+            <p id="feedback10"></p>
+            <div class="progress">Progress: <span id="progress10">0%</span></div>
+        </div>
+    </div>
+    
+    
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module11">
+            <h2>Module 11 - Coming Soon</h2>
+            <p>Complete Module 10 to unlock this!</p>
+    <div class="container">
+        <h1>Python Course - Module 11</h1>
+        <p>Learn about Python List Comprehension, Sorting, Copying, Joining, and Methods</p>
+
+        <div class="module-box" id="module11">
+            <h2>Module 11: List Operations</h2>
+
+            <div class="topic-box">
+                <h3>List Comprehension</h3>
+                <p>Shorter syntax for creating a new list from an existing list.<br></p>
+                <code>fruits = ["apple", "banana", "cherry", "kiwi", "mango"]<br>newlist = [x for x in fruits if "a" in x]<br>print(newlist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Syntax</h3>
+                <p><code>newlist = [expression for item in iterable if condition == True]</code><br></p>
+            </div>
+            <div class="topic-box">
+                <h3>Condition</h3>
+                <p>Filter items based on a condition.<br></p>
+                <code>newlist = [x for x in fruits if x != "apple"]<br>newlist = [x for x in fruits]</code>
+            </div>
+            <div class="topic-box">
+                <h3>Iterable</h3>
+                <p>Use any iterable object (list, tuple, range, etc.).<br></p>
+                <code>newlist = [x for x in range(10)]<br>newlist = [x for x in range(10) if x < 5]</code>
+            </div>
+            <div class="topic-box">
+                <h3>Expression</h3>
+                <p>Manipulate items before adding to the new list.<br></p>
+                <code>newlist = [x.upper() for x in fruits]<br>newlist = ['hello' for x in fruits]<br>newlist = [x if x != "banana" else "orange" for x in fruits]</code>
+            </div>
+            <div class="topic-box">
+                <h3>Sort Lists</h3>
+                <p>Use <code>sort()</code> to sort lists alphanumerically or numerically.<br></p>
+                <code>thislist = ["orange", "mango", "kiwi", "pineapple", "banana"]<br>thislist.sort()<br>print(thislist)<br>thislist = [100, 50, 65, 82, 23]<br>thislist.sort()<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Sort Descending</h3>
+                <p>Use <code>reverse = True</code> to sort in descending order.<br></p>
+                <code>thislist = ["orange", "mango", "kiwi", "pineapple", "banana"]<br>thislist.sort(reverse=True)<br>print(thislist)<br>thislist = [100, 50, 65, 82, 23]<br>thislist.sort(reverse=True)<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Customize Sort Function</h3>
+                <p>Use <code>key = function</code> to customize sorting.<br></p>
+                <code>def myfunc(n):<br>    return abs(n - 50)<br>thislist = [100, 50, 65, 82, 23]<br>thislist.sort(key=myfunc)<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Case Insensitive Sort</h3>
+                <p>Use <code>key = str.lower</code> for case-insensitive sorting.<br></p>
+                <code>thislist = ["banana", "Orange", "Kiwi", "cherry"]<br>thislist.sort(key=str.lower)<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Reverse Order</h3>
+                <p>Use <code>reverse()</code> to reverse the order of elements.<br></p>
+                <code>thislist = ["banana", "Orange", "Kiwi", "cherry"]<br>thislist.reverse()<br>print(thislist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Copy Lists</h3>
+                <p>Use <code>copy()</code> or <code>list()</code> to create a copy of a list.<br></p>
+                <code>thislist = ["apple", "banana", "cherry"]<br>mylist = thislist.copy()<br>print(mylist)<br>thislist = ["apple", "banana", "cherry"]<br>mylist = list(thislist)<br>print(mylist)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Join Lists</h3>
+                <p>Use <code>+</code>, <code>append()</code>, or <code>extend()</code> to join lists.<br></p>
+                <code>list1 = ["a", "b", "c"]<br>list2 = [1, 2, 3]<br>list3 = list1 + list2<br>print(list3)<br>list1 = ["a", "b", "c"]<br>list2 = [1, 2, 3]<br>for x in list2:<br>    list1.append(x)<br>print(list1)<br>list1 = ["a", "b", "c"]<br>list2 = [1, 2, 3]<br>list1.extend(list2)<br>print(list1)</code>
+            </div>
+            <div class="topic-box">
+                <h3>List Methods</h3>
+                <p><code>append()</code>, <code>clear()</code>, <code>copy()</code>, <code>count()</code>, <code>extend()</code>, <code>index()</code>, <code>insert()</code>, <code>pop()</code>, <code>remove()</code>, <code>reverse()</code>, <code>sort()</code>.<br></p>
+            </div>
+
+            <textarea class="code-box" id="code-input11" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(11)">Check Syntax</button>
+            <p id="feedback11"></p>
+            <div class="progress">Progress: <span id="progress11">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module12">
+            <h2>Module 12 - Coming Soon</h2>
+            <p>Complete Module 11 to unlock this!</p>
+    <div class="container">
+        <h1>Python Course - Module 12</h1>
+        <p>Learn about Python Tuples</p>
+
+        <div class="module-box" id="module12">
+            <h2>Module 12: Python Tuples</h2>
+
+            <div class="topic-box">
+                <h3>Tuples</h3>
+                <p>Tuples store multiple items in a single variable, ordered and unchangeable, written with round brackets.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>print(thistuple)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Tuple Items</h3>
+                <p>Ordered, unchangeable, allow duplicates, indexed (first item [0]).<br></p>
+                <code>thistuple = ("apple", "banana", "cherry", "apple", "cherry")<br>print(thistuple)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Tuple Length</h3>
+                <p>Use <code>len()</code> to get the number of items.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>print(len(thistuple))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Create Tuple With One Item</h3>
+                <p>Add a comma after the item.<br></p>
+                <code>thistuple = ("apple",)<br>print(type(thistuple))<br>thistuple = ("apple")<br>print(type(thistuple))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Tuple Items - Data Types</h3>
+                <p>Tuples can contain any data type (string, int, boolean) or mixed types.<br></p>
+                <code>tuple1 = ("apple", "banana", "cherry")<br>tuple2 = (1, 5, 7, 9, 3)<br>tuple3 = (True, False, False)<br>tuple1 = ("abc", 34, True, 40, "male")</code>
+            </div>
+            <div class="topic-box">
+                <h3>type()</h3>
+                <p>Tuples are objects with the data type 'tuple'.<br></p>
+                <code>mytuple = ("apple", "banana", "cherry")<br>print(type(mytuple))</code>
+            </div>
+            <div class="topic-box">
+                <h3>The tuple() Constructor</h3>
+                <p>Use <code>tuple()</code> to create a new tuple.<br></p>
+                <code>thistuple = tuple(("apple", "banana", "cherry"))<br>print(thistuple)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Access Tuple Items</h3>
+                <p>Access items by index, negative index, or range.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>print(thistuple[1])<br>print(thistuple[-1])<br>thistuple = ("apple", "banana", "cherry", "orange", "kiwi", "melon", "mango")<br>print(thistuple[2:5])<br>print(thistuple[:4])<br>print(thistuple[2:])<br>print(thistuple[-4:-1])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Check if Item Exists</h3>
+                <p>Use <code>in</code> to check if an item is present.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>if "apple" in thistuple:<br>    print("Yes, 'apple' is in the fruits tuple")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Update Tuples</h3>
+                <p>Convert tuple to list, change, and convert back.<br></p>
+                <code>x = ("apple", "banana", "cherry")<br>y = list(x)<br>y[1] = "kiwi"<br>x = tuple(y)<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Add Items</h3>
+                <p>Convert to list, append, and convert back, or add tuple to tuple.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>y = list(thistuple)<br>y.append("orange")<br>thistuple = tuple(y)<br>thistuple = ("apple", "banana", "cherry")<br>y = ("orange",)<br>thistuple += y<br>print(thistuple)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Remove Items</h3>
+                <p>Convert to list, remove, and convert back, or delete the tuple.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>y = list(thistuple)<br>y.remove("apple")<br>thistuple = tuple(y)<br>thistuple = ("apple", "banana", "cherry")<br>del thistuple<br>print(thistuple) #error</code>
+            </div>
+            <div class="topic-box">
+                <h3>Unpack Tuples</h3>
+                <p>Extract values back into variables.<br></p>
+                <code>fruits = ("apple", "banana", "cherry")<br>(green, yellow, red) = fruits<br>print(green)<br>print(yellow)<br>print(red)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Using Asterisk*</h3>
+                <p>Assign remaining values as a list.<br></p>
+                <code>fruits = ("apple", "banana", "cherry", "strawberry", "raspberry")<br>(green, yellow, *red) = fruits<br>print(green)<br>print(yellow)<br>print(red)<br>fruits = ("apple", "mango", "papaya", "pineapple", "cherry")<br>(green, *tropic, red) = fruits<br>print(green)<br>print(tropic)<br>print(red)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Loop Tuple</h3>
+                <p>Loop through tuples using <code>for</code> loops, index numbers, or <code>while</code> loops.<br></p>
+                <code>thistuple = ("apple", "banana", "cherry")<br>for x in thistuple:<br>    print(x)<br>thistuple = ("apple", "banana", "cherry")<br>for i in range(len(thistuple)):<br>    print(thistuple[i])<br>thistuple = ("apple", "banana", "cherry")<br>i = 0<br>while i < len(thistuple):<br>    print(thistuple[i])<br>    i = i + 1</code>
+            </div>
+        <p>Learn about Python Tuple Joining and Methods</p>
+
+            <div class="topic-box">
+                <h3>Join Two Tuples</h3>
+                <p>Use the <code>+</code> operator to join tuples.<br></p>
+                <code>tuple1 = ("a", "b", "c")<br>tuple2 = (1, 2, 3)<br>tuple3 = tuple1 + tuple2<br>print(tuple3)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Multiply Tuples</h3>
+                <p>Use the <code>*</code> operator to multiply tuples.<br></p>
+                <code>fruits = ("apple", "banana", "cherry")<br>mytuple = fruits * 2<br>print(mytuple)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Tuple Methods</h3>
+                <p><code>count()</code>: Returns the number of times a specified value occurs in a tuple.<br>
+                   <code>index()</code>: Searches the tuple for a specified value and returns the position of where it was found.<br></p>
+            </div>
+            <textarea class="code-box" id="code-input12" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(12)">Check Syntax</button>
+            <p id="feedback12"></p>
+            <div class="progress">Progress: <span id="progress12">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+            
+            
+            
+
+        <div class="module-box locked" id="module13">
+            <h2>Module 13 - Coming Soon</h2>
+            <p>Complete Module 12 to unlock this!</p>
+        <p>Learn about Python Sets</p>
+
+
+            <div class="topic-box">
+                <h3>Sets</h3>
+                <p>Sets store multiple items in a single variable, unordered, unchangeable, and unindexed, written with curly brackets.<br></p>
+                <code>thisset = {"apple", "banana", "cherry"}<br>print(thisset)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Set Items</h3>
+                <p>Unordered, unchangeable, do not allow duplicates.<br></p>
+                <code>thisset = {"apple", "banana", "cherry", "apple"}<br>print(thisset)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Get the Length of a Set</h3>
+                <p>Use <code>len()</code> to get the number of items.<br></p>
+                <code>thisset = {"apple", "banana", "cherry"}<br>print(len(thisset))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Set Items - Data Types</h3>
+                <p>Sets can contain any data type (string, int, boolean) or mixed types.<br></p>
+                <code>set1 = {"apple", "banana", "cherry"}<br>set2 = {1, 5, 7, 9, 3}<br>set3 = {True, False, False}<br>set1 = {"abc", 34, True, 40, "male"}</code>
+            </div>
+            <div class="topic-box">
+                <h3>type()</h3>
+                <p>Sets are objects with the data type 'set'.<br></p>
+                <code>myset = {"apple", "banana", "cherry"}<br>print(type(myset))</code>
+            </div>
+            <div class="topic-box">
+                <h3>The set() Constructor</h3>
+                <p>Use <code>set()</code> to create a new set.<br></p>
+                <code>thisset = set(("apple", "banana", "cherry"))<br>print(thisset)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Access Set Items</h3>
+                <p>Loop through set items using a <code>for</code> loop, or check if an item is present using <code>in</code>.<br></p>
+                <code>thisset = {"apple", "banana", "cherry"}<br>for x in thisset:<br>    print(x)<br>print("banana" in thisset)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Add Set Items</h3>
+                <p>Use <code>add()</code> to add one item, <code>update()</code> to add items from another set or iterable.<br></p>
+                <code>thisset = {"apple", "banana", "cherry"}<br>thisset.add("orange")<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>tropical = {"pineapple", "mango", "papaya"}<br>thisset.update(tropical)<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>mylist = ["kiwi", "orange"]<br>thisset.update(mylist)<br>print(thisset)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Remove Set Items</h3>
+                <p>Use <code>remove()</code>, <code>discard()</code>, <code>pop()</code>, <code>clear()</code>, or <code>del</code> to remove items.<br></p>
+                <code>thisset = {"apple", "banana", "cherry"}<br>thisset.remove("banana")<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>thisset.discard("banana")<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>x = thisset.pop()<br>print(x)<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>thisset.clear()<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>del thisset<br>print(thisset) #error</code>
+            </div>
+            <div class="topic-box">
+                <h3>Loop Sets</h3>
+                <p>Loop through set items using a <code>for</code> loop.<br></p>
+                <code>thisset = {"apple", "banana", "cherry"}<br>for x in thisset:<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Join Sets</h3>
+                <p>Use <code>union()</code>, <code>update()</code>, <code>intersection_update()</code>, <code>intersection()</code>, <code>symmetric_difference_update()</code>, or <code>symmetric_difference()</code> to join sets.<br></p>
+                <code>set1 = {"a", "b", "c"}<br>set2 = {1, 2, 3}<br>set3 = set1.union(set2)<br>print(set3)<br>set1 = {"a", "b", "c"}<br>set2 = {1, 2, 3}<br>set1.update(set2)<br>print(set1)<br>x = {"apple", "banana", "cherry"}<br>y = {"google", "microsoft", "apple"}<br>x.intersection_update(y)<br>print(x)<br>x = {"apple", "banana", "cherry"}<br>y = {"google", "microsoft", "apple"}<br>z = x.intersection(y)<br>print(z)<br>x = {"apple", "banana", "cherry"}<br>y = {"google", "microsoft", "apple"}<br>x.symmetric_difference_update(y)<br>print(x)<br>x = {"apple", "banana", "cherry"}<br>y = {"google", "microsoft", "apple"}<br>z = x.symmetric_difference(y)<br>print(z)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Set Methods</h3>
+                <p><code>add()</code>, <code>clear()</code>, <code>copy()</code>, <code>difference()</code>, <code>difference_update()</code>, <code>discard()</code>, <code>intersection()</code>, <code>intersection_update()</code>, <code>isdisjoint()</code>, <code>issubset()</code>, <code>issuperset()</code>, <code>pop()</code>, <code>remove()</code>, <code>symmetric_difference()</code>, <code>symmetric_difference_update()</code>, <code>union()</code>, <code>update()</code>.<br></p>
+            </div>
+
+            <textarea class="code-box" id="code-input14" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(14)">Check Syntax</button>
+            <p id="feedback14"></p>
+            <div class="progress">Progress: <span id="progress14">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module14">
+            <h2>Module 14 - Coming Soon</h2>
+            <p>Complete Module 13 to unlock this!</p>
+        <p>Learn about Python Dictionaries</p>
+
+        <div class="module-box" id="module15">
+            <h2>Module 14: Python Dictionaries</h2>
+
+            <div class="topic-box">
+                <h3>Dictionaries</h3>
+                <p>Dictionaries store data in key:value pairs, ordered, changeable, and do not allow duplicates, written with curly brackets.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(thisdict)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Dictionary Items</h3>
+                <p>Ordered, changeable, no duplicates, accessed by key name.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(thisdict["brand"])</code>
+            </div>
+            <div class="topic-box">
+                <h3>Duplicates Not Allowed</h3>
+                <p>Duplicate keys overwrite existing values.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964, "year": 2020}<br>print(thisdict)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Dictionary Length</h3>
+                <p>Use <code>len()</code> to get the number of items.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(len(thisdict))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Dictionary Items - Data Types</h3>
+                <p>Values can be any data type (string, int, boolean, list).<br></p>
+                <code>thisdict = {"brand": "Ford", "electric": False, "year": 1964, "colors": ["red", "white", "blue"]}</code>
+            </div>
+            <div class="topic-box">
+                <h3>type()</h3>
+                <p>Dictionaries are objects with the data type 'dict'.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(type(thisdict))</code>
+            </div>
+            <div class="topic-box">
+                <h3>The dict() Constructor</h3>
+                <p>Use <code>dict()</code> to create a new dictionary.<br></p>
+                <code>thisdict = dict(name="John", age=36, country="Norway")<br>print(thisdict)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Accessing Items</h3>
+                <p>Access items by key name or using <code>get()</code>.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>x = thisdict["model"]<br>x = thisdict.get("model")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Get Keys</h3>
+                <p>Use <code>keys()</code> to get a list of keys.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>x = thisdict.keys()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Get Values</h3>
+                <p>Use <code>values()</code> to get a list of values.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>x = thisdict.values()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Get Items</h3>
+                <p>Use <code>items()</code> to get key:value pairs as tuples in a list.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>x = thisdict.items()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Check if Key Exists</h3>
+                <p>Use <code>in</code> to check if a key exists.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>if "model" in thisdict:<br>    print("Yes, 'model' is one of the keys in the thisdict dictionary")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Change Values</h3>
+                <p>Change values by key name or using <code>update()</code>.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>thisdict["year"] = 2018<br>thisdict.update({"year": 2020})</code>
+            </div>
+            <div class="topic-box">
+                <h3>Adding Items</h3>
+                <p>Add items by assigning a value to a new key or using <code>update()</code>.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>thisdict["color"] = "red"<br>print(thisdict)<br>thisdict.update({"color": "red"})</code>
+            </div>
+            <div class="topic-box">
+                <h3>Removing Items</h3>
+                <p>Remove items using <code>pop()</code>, <code>popitem()</code>, <code>del</code>, or <code>clear()</code>.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>thisdict.pop("model")<br>print(thisdict)<br>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>thisdict.popitem()<br>print(thisdict)<br>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>del thisdict["model"]<br>print(thisdict)<br>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>del thisdict<br>print(thisdict) #error<br>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>thisdict.clear()<br>print(thisdict)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Loop Dictionaries</h3>
+                <p>Loop through keys, values, or items using <code>for</code> loops and methods like <code>keys()</code>, <code>values()</code>, and <code>items()</code>.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>for x in thisdict:<br>    print(x)<br>for x in thisdict:<br>    print(thisdict[x])<br>for x in thisdict.values():<br>    print(x)<br>for x in thisdict.keys():<br>    print(x)<br>for x, y in thisdict.items():<br>    print(x, y)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Copy Dictionaries</h3>
+                <p>Copy dictionaries using <code>copy()</code> or <code>dict()</code>.<br></p>
+                <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>mydict = thisdict.copy()<br>print(mydict)<br>mydict = dict(thisdict)<br>print(mydict)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Nested Dictionaries</h3>
+                <p>Dictionaries can contain other dictionaries.<br></p>
+                <code>myfamily = {"child1": {"name": "Emil", "year": 2004}, "child2": {"name": "Tobias", "year": 2007}, "child3": {"name": "Linus", "year": 2011}}<br>child1 = {"name": "Emil", "year": 2004}<br>child2 = {"name": "Tobias", "year": 2007}<br>child3 = {"name": "Linus", "year": 2011}<br>myfamily = {"child1": child1, "child2": child2, "child3": child3}</code>
+            </div>
+            <div class="topic-box">
+                <h3>Dictionary Methods</h3>
+                <p><code>clear()</code>, <code>copy()</code>, <code>fromkeys()</code>, <code>get()</code>, <code>items()</code>, <code>keys()</code>, <code>pop()</code>, <code>popitem()</code>, <code>setdefault()</code>, <code>update()</code>, <code>values()</code>.<br></p>
+            </div>
+            <div class="topic-box">
+                <h3>Python If ... Else</h3>
+                <p>Use <code>if</code>, <code>elif</code>, and <code>else</code> for conditional statements.<br></p>
+                <code>a = 33<br>b = 200<br>if b > a:<br>    print("b is greater than a")<br>a = 33<br>b = 33<br>if b > a:<br>    print("b is greater than a")<br>elif a == b:<br>    print("a and b are equal")<br>a = 200<br>b = 33<br>if b > a:<br>    print("b is greater than a")<br>elif a == b:<br>    print("a and b are equal")<br>else:<br>    print("a is greater than b")<br>if a > b: print("a is greater than b")<br>a = 2<br>b = 330<br>print("A") if a > b else print("B")<br>a = 330<br>b = 330<br>print("A") if a > b else print("=") if a == b else print("B")<br>a = 200<br>b = 33<br>c = 500<br>if a > b and c > a:<br>    print("Both conditions are True")<br>a = 200<br>b = 33<br>c = 500<br>if a > b or a > c:<br>    print("At least one of the conditions is True")<br>x = 41<br>if x > 10:<br>    print("Above ten,")<br>    if x > 20:<br>        print("and also above 20!")<br>    else:<br>        print("but not above 20.")<br>a = 33<br>b = 200<br>if b > a:<br>    pass</code>
+            </div>
+
+            <textarea class="code-box" id="code-input15" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(15)">Check Syntax</button>
+            <p id="feedback15"></p>
+            <div class="progress">Progress: <span id="progress15">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module15">
+            <h2>Module 15 - Coming Soon</h2>
+            <p>Complete Module 14 to unlock this!</p>
+        <h1>Python Course - Module 15</h1>
+        <p>Learn about Python Loops</p>
+
+        <div class="module-box" id="module16">
+            <h2>Module 16: Python Loops</h2>
+
+            <div class="topic-box">
+                <h3>While Loop</h3>
+                <p>Execute a set of statements as long as a condition is true.<br></p>
+                <code>i = 1<br>while i < 6:<br>    print(i)<br>    i += 1</code>
+            </div>
+            <div class="topic-box">
+                <h3>Break Statement</h3>
+                <p>Stop the loop even if the while condition is true.<br></p>
+                <code>i = 1<br>while i < 6:<br>    print(i)<br>    if i == 3:<br>        break<br>    i += 1</code>
+            </div>
+            <div class="topic-box">
+                <h3>Continue Statement</h3>
+                <p>Stop the current iteration, and continue with the next.<br></p>
+                <code>i = 0<br>while i < 6:<br>    i += 1<br>    if i == 3:<br>        continue<br>    print(i)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Else Statement</h3>
+                <p>Run a block of code once when the condition is false.<br></p>
+                <code>i = 1<br>while i < 6:<br>    print(i)<br>    i += 1<br>else:<br>    print("i is no longer less than 6")</code>
+            </div>
+            <div class="topic-box">
+                <h3>For Loop</h3>
+                <p>Iterate over a sequence (list, tuple, dictionary, set, string).<br></p>
+                <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Looping Through a String</h3>
+                <p>Strings are iterable objects.<br></p>
+                <code>for x in "banana":<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Break Statement (For Loop)</h3>
+                <p>Stop the loop before it has looped through all items.<br></p>
+                <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    print(x)<br>    if x == "banana":<br>        break<br>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    if x == "banana":<br>        break<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Continue Statement (For Loop)</h3>
+                <p>Stop the current iteration and continue with the next.<br></p>
+                <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    if x == "banana":<br>        continue<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Range() Function</h3>
+                <p>Loop through a set of code a specified number of times.<br></p>
+                <code>for x in range(6):<br>    print(x)<br>for x in range(2, 6):<br>    print(x)<br>for x in range(2, 30, 3):<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Else in For Loop</h3>
+                <p>Execute a block of code when the loop is finished.<br></p>
+                <code>for x in range(6):<br>    print(x)<br>else:<br>    print("Finally finished!")<br>for x in range(6):<br>    if x == 3: break<br>    print(x)<br>else:<br>    print("Finally finished!")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Nested Loops</h3>
+                <p>Loop inside a loop.<br></p>
+                <code>adj = ["red", "big", "tasty"]<br>fruits = ["apple", "banana", "cherry"]<br>for x in adj:<br>    for y in fruits:<br>        print(x, y)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Pass Statement</h3>
+                <p>Use <code>pass</code> to avoid getting an error in empty loops.<br></p>
+                <code>for x in [0, 1, 2]:<br>    pass</code>
+            </div>
+            <textarea class="code-box" id="code-input15" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(15)">Check Syntax</button>
+            <p id="feedback15"></p>
+            <div class="progress">Progress: <span id="progress15">0%</span></div>
+        </div>
+    </div>            
+            
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+        <div class="module-box locked" id="module16">
+            <h2>Module 16 - Coming Soon</h2>
+            <p>Complete Module 15 to unlock this!</p>
+        <h1>Python Course - Module 16</h1>
+        <p>Learn about Python Functions</p>
+
+        <div class="module-box" id="module17">
+            <h2>Module 16: Python Functions</h2>
+
+            <div class="topic-box">
+                <h3>Creating a Function</h3>
+                <p>Use the <code>def</code> keyword to define a function.<br></p>
+                <code>def my_function():<br>    print("Hello from a function")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Calling a Function</h3>
+                <p>Use the function name followed by parenthesis to call it.<br></p>
+                <code>def my_function():<br>    print("Hello from a function")<br>my_function()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Arguments</h3>
+                <p>Pass information into functions as arguments.<br></p>
+                <code>def my_function(fname):<br>    print(fname + " Refsnes")<br>my_function("Emil")<br>my_function("Tobias")<br>my_function("Linus")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Number of Arguments</h3>
+                <p>Functions must be called with the correct number of arguments.<br></p>
+                <code>def my_function(fname, lname):<br>    print(fname + " " + lname)<br>my_function("Emil", "Refsnes")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Arbitrary Arguments, *args</h3>
+                <p>Use <code>*args</code> when you don't know how many arguments will be passed.<br></p>
+                <code>def my_function(*kids):<br>    print("The youngest child is " + kids[2])<br>my_function("Emil", "Tobias", "Linus")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Keyword Arguments</h3>
+                <p>Send arguments with the <code>key = value</code> syntax.<br></p>
+                <code>def my_function(child3, child2, child1):<br>    print("The youngest child is " + child3)<br>my_function(child1="Emil", child2="Tobias", child3="Linus")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Arbitrary Keyword Arguments, **kwargs</h3>
+                <p>Use <code>**kwargs</code> when you don't know how many keyword arguments will be passed.<br></p>
+                <code>def my_function(**kid):<br>    print("His last name is " + kid["lname"])<br>my_function(fname="Tobias", lname="Refsnes")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Default Parameter Value</h3>
+                <p>Use default values if the function is called without arguments.<br></p>
+                <code>def my_function(country="Norway"):<br>    print("I am from " + country)<br>my_function("Sweden")<br>my_function("India")<br>my_function()<br>my_function("Brazil")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Passing a List as an Argument</h3>
+                <p>Send any data type as an argument.<br></p>
+                <code>def my_function(food):<br>    for x in food:<br>        print(x)<br>fruits = ["apple", "banana", "cherry"]<br>my_function(fruits)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Return Values</h3>
+                <p>Use the <code>return</code> statement to return a value.<br></p>
+                <code>def my_function(x):<br>    return 5 * x<br>print(my_function(3))<br>print(my_function(5))<br>print(my_function(9))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Pass Statement</h3>
+                <p>Use <code>pass</code> to avoid getting an error in empty functions.<br></p>
+                <code>def myfunction():<br>    pass</code>
+            </div>
+            <div class="topic-box">
+                <h3>Recursion</h3>
+                <p>A defined function can call itself.<br></p>
+                <code>def tri_recursion(k):<br>    if(k > 0):<br>        result = k + tri_recursion(k - 1)<br>        print(result)<br>    else:<br>        result = 0<br>    return result<br>print("\n\nRecursion Example Results")<br>tri_recursion(6)</code>
+            </div>
+            <textarea class="code-box" id="code-input15" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(15)">Check Syntax</button>
+            <p id="feedback15"></p>
+            <div class="progress">Progress: <span id="progress15">0%</span></div>
+        </div>
+    </div>        
+    
+    
+    
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module17">
+            <h2>Module 17 - Coming Soon</h2>
+            <p>Complete Module 16 to unlock this!</p>
+    <div class="container">
+        <h1>Python Course - Module 17</h1>
+        <p>Learn about Python Lambda Functions</p>
+
+        <div class="module-box" id="module18">
+            <h2>Module 18: Python Lambda Functions</h2>
+
+            <div class="topic-box">
+                <h3>Lambda Function</h3>
+                <p>A small anonymous function that can take any number of arguments, but can only have one expression.<br></p>
+                <code>x = lambda a : a + 10<br>print(x(5))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Multiple Arguments</h3>
+                <p>Lambda functions can take multiple arguments.<br></p>
+                <code>x = lambda a, b : a * b<br>print(x(5, 6))<br>x = lambda a, b, c : a + b + c<br>print(x(5, 6, 2))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Why Use Lambda Functions?</h3>
+                <p>Use lambda functions as an anonymous function inside another function.<br></p>
+                <code>def myfunc(n):<br>    return lambda a : a * n<br>mydoubler = myfunc(2)<br>print(mydoubler(11))<br>mytripler = myfunc(3)<br>print(mytripler(11))<br>mydoubler = myfunc(2)<br>mytripler = myfunc(3)<br>print(mydoubler(11))<br>print(mytripler(11))</code>
+            </div>
+
+            <textarea class="code-box" id="code-input18" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(18)">Check Syntax</button>
+            <p id="feedback18"></p>
+            <div class="progress">Progress: <span id="progress18">0%</span></div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="container">
+        <div class="module-box locked" id="module18">
+            <h2>Module 18 - Coming Soon</h2>
+            <p>Complete Module 17 to unlock this!</p>
+        <h1>Python Course - Module 18</h1>
+        <p>Learn about Python Arrays (Lists)</p>
+
+        <div class="module-box" id="module18">
+            <h2>Module 18: Python Arrays (Lists)</h2>
+
+            <div class="topic-box">
+                <h3>Arrays (Lists)</h3>
+                <p>Arrays are used to store multiple values in one single variable. Note: Python does not have built-in support for Arrays, but Python Lists can be used instead.<br></p>
+                <code>cars = ["Ford", "Volvo", "BMW"]</code>
+            </div>
+            <div class="topic-box">
+                <h3>Access Elements</h3>
+                <p>Access array elements by referring to the index number.<br></p>
+                <code>cars = ["Ford", "Volvo", "BMW"]<br>x = cars[0]<br>cars[0] = "Toyota"</code>
+            </div>
+            <div class="topic-box">
+                <h3>Length of an Array</h3>
+                <p>Use the <code>len()</code> method to return the length of an array.<br></p>
+                <code>cars = ["Ford", "Volvo", "BMW"]<br>x = len(cars)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Looping Array Elements</h3>
+                <p>Use a <code>for</code> loop to loop through all elements of an array.<br></p>
+                <code>cars = ["Ford", "Volvo", "BMW"]<br>for x in cars:<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Adding Array Elements</h3>
+                <p>Use the <code>append()</code> method to add an element to an array.<br></p>
+                <code>cars = ["Ford", "Volvo", "BMW"]<br>cars.append("Honda")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Removing Array Elements</h3>
+                <p>Use the <code>pop()</code> or <code>remove()</code> method to remove an element from an array.<br></p>
+                <code>cars = ["Ford", "Volvo", "BMW"]<br>cars.pop(1)<br>cars.remove("Volvo")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Array Methods</h3>
+                <p><code>append()</code>, <code>clear()</code>, <code>copy()</code>, <code>count()</code>, <code>extend()</code>, <code>index()</code>, <code>insert()</code>, <code>pop()</code>, <code>remove()</code>, <code>reverse()</code>, <code>sort()</code>.<br></p>
+            </div>
+
+            <textarea class="code-box" id="code-input19" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(19)">Check Syntax</button>
+            <p id="feedback19"></p>
+            <div class="progress">Progress: <span id="progress19">0%</span></div>
+        </div>
+    </div>
+
+            
+           
+
+
+
+
+
+        <div class="module-box locked" id="module19">
+            <h2>Module 19 - Coming Soon</h2>
+            <p>Complete Module 18 to unlock this!</p>
+        <h1>Python Course - Module 19</h1>
+        <p>Learn about Python Classes and Objects</p>
+
+        <div class="module-box" id="module19">
+            <h2>Module 19: Python Classes and Objects</h2>
+
+            <div class="topic-box">
+                <h3>Create a Class</h3>
+                <p>Use the <code>class</code> keyword to create a class.<br></p>
+                <code>class MyClass:<br>    x = 5</code>
+            </div>
+            <div class="topic-box">
+                <h3>Create Object</h3>
+                <p>Use the class name to create objects.<br></p>
+                <code>class MyClass:<br>    x = 5<br>p1 = MyClass()<br>print(p1.x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>The __init__() Function</h3>
+                <p>Use the <code>__init__()</code> function to assign values to object properties.<br></p>
+                <code>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br>p1 = Person("John", 36)<br>print(p1.name)<br>print(p1.age)</code>
+            </div>
+            <div class="topic-box">
+                <h3>The __str__() Function</h3>
+                <p>Use the <code>__str__()</code> function to control what should be returned when the object is represented as a string.<br></p>
+                <code>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br>    def __str__(self):<br>        return f"{self.name}({self.age})"<br>p1 = Person("John", 36)<br>print(p1)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Object Methods</h3>
+                <p>Methods in objects are functions that belong to the object.<br></p>
+                <code>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br>    def myfunc(self):<br>        print("Hello my name is " + self.name)<br>p1 = Person("John", 36)<br>p1.myfunc()</code>
+            </div>
+            <div class="topic-box">
+                <h3>The self Parameter</h3>
+                <p>The <code>self</code> parameter is a reference to the current instance of the class.<br></p>
+                <code>class Person:<br>    def __init__(mysillyobject, name, age):<br>        mysillyobject.name = name<br>        mysillyobject.age = age<br>    def myfunc(abc):<br>        print("Hello my name is " + abc.name)<br>p1 = Person("John", 36)<br>p1.myfunc()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Modify Object Properties</h3>
+                <p>Modify properties on objects.<br></p>
+                <code>p1.age = 40</code>
+            </div>
+            <div class="topic-box">
+                <h3>Delete Object Properties</h3>
+                <p>Delete properties on objects using the <code>del</code> keyword.<br></p>
+                <code>del p1.age</code>
+            </div>
+            <div class="topic-box">
+                <h3>Delete Objects</h3>
+                <p>Delete objects using the <code>del</code> keyword.<br></p>
+                <code>del p1</code>
+            </div>
+            <div class="topic-box">
+                <h3>The pass Statement</h3>
+                <p>Use the <code>pass</code> statement to avoid getting an error in empty class definitions.<br></p>
+                <code>class Person:<br>    pass</code>
+            </div>
+
+            <textarea class="code-box" id="code-input20" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(20)">Check Syntax</button>
+            <p id="feedback20"></p>
+            <div class="progress">Progress: <span id="progress20">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+
+        <div class="module-box locked" id="module20">
+            <h2>Module 20 - Coming Soon</h2>
+            <p>Complete Module 19 to unlock this!</p>
+
+        <h1>Python Course - Module 20</h1>
+        <p>Learn about Python Inheritance</p>
+
+        <div class="module-box" id="module21">
+            <h2>Module 20: Python Inheritance</h2>
+
+            <div class="topic-box">
+                <h3>Create a Parent Class</h3>
+                <p>Create a class that can be inherited from.<br></p>
+                <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>x = Person("John", "Doe")<br>x.printname()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Create a Child Class</h3>
+                <p>Create a class that inherits from a parent class.<br></p>
+                <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    pass<br>x = Student("Mike", "Olsen")<br>x.printname()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Add the __init__() Function</h3>
+                <p>Add the <code>__init__()</code> function to the child class.<br></p>
+                <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname):<br>        Person.__init__(self, fname, lname)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Use the super() Function</h3>
+                <p>Use the <code>super()</code> function to inherit methods and properties from the parent.<br></p>
+                <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname):<br>        super().__init__(fname, lname)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Add Properties</h3>
+                <p>Add properties to the child class.<br></p>
+                <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname, year):<br>        super().__init__(fname, lname)<br>        self.graduationyear = year<br>x = Student("Mike", "Olsen", 2019)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Add Methods</h3>
+                <p>Add methods to the child class.<br></p>
+                <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname, year):<br>        super().__init__(fname, lname)<br>        self.graduationyear = year<br>    def welcome(self):<br>        print("Welcome", self.firstname, self.lastname, "to the class of", self.graduationyear)</code>
+            </div>
+
+            <textarea class="code-box" id="code-input21" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(21)">Check Syntax</button>
+            <p id="feedback21"></p>
+            <div class="progress">Progress: <span id="progress21">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="module-box locked" id="module21">
+            <h2>Module 21 - Coming Soon</h2>
+            <p>Complete Module 20 to unlock this!</p>    
+        <h1>Python Course - Module 21</h1>
+        <p>Learn about Python Iterators</p>
+
+        <div class="module-box" id="module22">
+            <h2>Module 21: Python Iterators</h2>
+
+            <div class="topic-box">
+                <h3>Iterator vs Iterable</h3>
+                <p>Lists, tuples, dictionaries, and sets are iterable objects. An iterator is an object that can be iterated upon.<br></p>
+                <code>mytuple = ("apple", "banana", "cherry")<br>myit = iter(mytuple)<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Strings as Iterables</h3>
+                <p>Strings are also iterable objects, containing a sequence of characters.<br></p>
+                <code>mystr = "banana"<br>myit = iter(mystr)<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Looping Through an Iterator</h3>
+                <p>Use a <code>for</code> loop to iterate through an iterable object.<br></p>
+                <code>mytuple = ("apple", "banana", "cherry")<br>for x in mytuple:<br>    print(x)<br>mystr = "banana"<br>for x in mystr:<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Create an Iterator</h3>
+                <p>Implement the <code>__iter__()</code> and <code>__next__()</code> methods to create an iterator.<br></p>
+                <code>class MyNumbers:<br>    def __iter__(self):<br>        self.a = 1<br>        return self<br>    def __next__(self):<br>        x = self.a<br>        self.a += 1<br>        return x<br>myclass = MyNumbers()<br>myiter = iter(myclass)<br>print(next(myiter))<br>print(next(myiter))<br>print(next(myiter))<br>print(next(myiter))<br>print(next(myiter))</code>
+            </div>
+            <div class="topic-box">
+                <h3>StopIteration</h3>
+                <p>Use the <code>StopIteration</code> statement to prevent the iteration from going on forever.<br></p>
+                <code>class MyNumbers:<br>    def __iter__(self):<br>        self.a = 1<br>        return self<br>    def __next__(self):<br>        if self.a <= 20:<br>            x = self.a<br>            self.a += 1<br>            return x<br>        else:<br>            raise StopIteration<br>myclass = MyNumbers()<br>myiter = iter(myclass)<br>for x in myiter:<br>    print(x)</code>
+            </div>
+
+            <textarea class="code-box" id="code-input22" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(22)">Check Syntax</button>
+            <p id="feedback22"></p>
+            <div class="progress">Progress: <span id="progress22">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <div class="module-box locked" id="module22">
+            <h2>Module 22 - Coming Soon</h2>
+            <p>Complete Module 21 to unlock this!</p>     
+        <h1>Python Course - Module 22</h1>
+        <p>Learn about Python Scope</p>
+
+        <div class="module-box" id="module23">
+            <h2>Module 22: Python Scope</h2>
+
+            <div class="topic-box">
+                <h3>Local Scope</h3>
+                <p>A variable created inside a function belongs to the local scope of that function, and can only be used inside that function.<br></p>
+                <code>def myfunc():<br>    x = 300<br>    print(x)<br>myfunc()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Function Inside Function</h3>
+                <p>A local variable can be accessed from a function within the function.<br></p>
+                <code>def myfunc():<br>    x = 300<br>    def myinnerfunc():<br>        print(x)<br>    myinnerfunc()<br>myfunc()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Global Scope</h3>
+                <p>A variable created outside of a function is global and can be used by anyone.<br></p>
+                <code>x = 300<br>def myfunc():<br>    print(x)<br>myfunc()<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Naming Variables</h3>
+                <p>Python treats variables with the same name inside and outside a function as two separate variables.<br></p>
+                <code>x = 300<br>def myfunc():<br>    x = 200<br>    print(x)<br>myfunc()<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Global Keyword</h3>
+                <p>Use the <code>global</code> keyword to create a global variable inside a function or to change a global variable inside a function.<br></p>
+                <code>def myfunc():<br>    global x<br>    x = 300<br>myfunc()<br>print(x)<br>x = 300<br>def myfunc():<br>    global x<br>    x = 200<br>myfunc()<br>print(x)</code>
+            </div>
+
+            <textarea class="code-box" id="code-input23" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(23)">Check Syntax</button>
+            <p id="feedback23"></p>
+            <div class="progress">Progress: <span id="progress23">0%</span></div>
+        </div>
+    </div>
+    
+    
+    
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        <div class="module-box locked" id="module23">
+            <h2>Module 23 - Coming Soon</h2>
+            <p>Complete Module 22 to unlock this!</p>      
+ 
+        <h1>Python Course - Module 23</h1>
+        <p>Learn about Python Modules</p>
+
+        <div class="module-box" id="module24">
+            <h2>Module 23: Python Modules</h2>
+
+            <div class="topic-box">
+                <h3>Create a Module</h3>
+                <p>Save the code you want in a file with the file extension <code>.py</code>.<br></p>
+                <code># mymodule.py<br>def greeting(name):<br>    print("Hello, " + name)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Use a Module</h3>
+                <p>Import the module using the <code>import</code> statement.<br></p>
+                <code>import mymodule<br>mymodule.greeting("Jonathan")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Variables in Module</h3>
+                <p>Modules can contain functions and variables of all types.<br></p>
+                <code># mymodule.py<br>person1 = {<br>    "name": "John",<br>    "age": 36,<br>    "country": "Norway"<br>}<br>import mymodule<br>a = mymodule.person1["age"]<br>print(a)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Re-naming a Module</h3>
+                <p>Create an alias using the <code>as</code> keyword.<br></p>
+                <code>import mymodule as mx<br>a = mx.person1["age"]<br>print(a)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Built-in Modules</h3>
+                <p>Python has several built-in modules.<br></p>
+                <code>import platform<br>x = platform.system()<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Using the dir() Function</h3>
+                <p>List all function names or variable names in a module using the <code>dir()</code> function.<br></p>
+                <code>import platform<br>x = dir(platform)<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Import From Module</h3>
+                <p>Import only parts from a module using the <code>from</code> keyword.<br></p>
+                <code># mymodule.py<br>def greeting(name):<br>    print("Hello, " + name)<br>person1 = {<br>    "name": "John",<br>    "age": 36,<br>    "country": "Norway"<br>}<br>from mymodule import person1<br>print(person1["age"])</code>
+            </div>
+
+            <textarea class="code-box" id="code-input24" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(24)">Check Syntax</button>
+            <p id="feedback24"></p>
+            <div class="progress">Progress: <span id="progress24">0%</span></div>
+        </div>
+    </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        <div class="module-box locked" id="module24">
+            <h2>Module 24 - Coming Soon</h2>
+            <p>Complete Module 23 to unlock this!</p> 
+        <h1>Python Course - Module 24</h1>
+        <p>Learn about Python Datetime</p>
+
+        <div class="module-box" id="module25">
+            <h2>Module 24: Python Datetime</h2>
+
+            <div class="topic-box">
+                <h3>Python Dates</h3>
+                <p>Import the <code>datetime</code> module to work with dates as date objects.<br></p>
+                <code>import datetime<br>x = datetime.datetime.now()<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Date Output</h3>
+                <p>The date contains year, month, day, hour, minute, second, and microsecond.<br></p>
+                <code>import datetime<br>x = datetime.datetime.now()<br>print(x.year)<br>print(x.strftime("%A"))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Creating Date Objects</h3>
+                <p>Use the <code>datetime()</code> class to create a date object.<br></p>
+                <code>import datetime<br>x = datetime.datetime(2020, 5, 17)<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>The strftime() Method</h3>
+                <p>Use the <code>strftime()</code> method to format date objects into readable strings.<br></p>
+                <code>import datetime<br>x = datetime.datetime(2018, 6, 1)<br>print(x.strftime("%B"))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Format Codes</h3>
+                <p>Reference of legal format codes: <code>%a</code>, <code>%A</code>, <code>%w</code>, <code>%d</code>, <code>%b</code>, <code>%B</code>, <code>%m</code>, <code>%y</code>, <code>%Y</code>, <code>%H</code>, <code>%I</code>, <code>%p</code>, <code>%M</code>, <code>%S</code>, <code>%f</code>, <code>%z</code>, <code>%Z</code>, <code>%j</code>, <code>%U</code>, <code>%W</code>, <code>%c</code>, <code>%C</code>, <code>%x</code>, <code>%X</code>, <code>%%</code>, <code>%G</code>, <code>%u</code>, <code>%V</code>.<br></p>
+            </div>
+            <div class="topic-box">
+                <h3>Built-in Math Functions</h3>
+                <p>Use <code>min()</code>, <code>max()</code>, <code>abs()</code>, and <code>pow()</code> functions.<br></p>
+                <code>x = min(5, 10, 25)<br>y = max(5, 10, 25)<br>print(x)<br>print(y)<br>x = abs(-7.25)<br>print(x)<br>x = pow(4, 3)<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>The Math Module</h3>
+                <p>Import the <code>math</code> module for more mathematical functions.<br></p>
+                <code>import math<br>x = math.sqrt(64)<br>print(x)<br>x = math.ceil(1.4)<br>y = math.floor(1.4)<br>print(x)<br>print(y)<br>x = math.pi<br>print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>String format()</h3>
+                <p>Use the <code>format()</code> method to format selected parts of a string.<br></p>
+                <code>price = 49<br>txt = "The price is {} dollars"<br>print(txt.format(price))<br>txt = "The price is {:.2f} dollars"</code>
+            </div>
+            <div class="topic-box">
+                <h3>Multiple Values</h3>
+                <p>Add more values to the <code>format()</code> method and more placeholders.<br></p>
+                <code>quantity = 3<br>itemno = 567<br>price = 49<br>myorder = "I want {} pieces of item number {} for {:.2f} dollars."<br>print(myorder.format(quantity, itemno, price))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Index Numbers</h3>
+                <p>Use index numbers inside curly brackets to place values in correct placeholders.<br></p>
+                <code>quantity = 3<br>itemno = 567<br>price = 49<br>myorder = "I want {0} pieces of item number {1} for {2:.2f} dollars."<br>print(myorder.format(quantity, itemno, price))</code>
+            </div>
+            <div class="topic-box">
+                <h3>Named Indexes</h3>
+                <p>Use named indexes inside curly brackets and pass named parameters to <code>format()</code>.<br></p>
+                <code>myorder = "I have a {carname}, it is a {model}."<br>print(myorder.format(carname = "Ford", model = "Mustang"))</code>
+            </div>
+            <textarea class="code-box" id="code-input25" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(25)">Check Syntax</button>
+            <p id="feedback25"></p>
+            <div class="progress">Progress: <span id="progress25">0%</span></div>
+        </div>
+    </div>
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+        <div class="module-box locked" id="module25">
+            <h2>Module 25 - Coming Soon</h2>
+            <p>Complete Module 24 to unlock this!</p> 
+        <h1>Python Course - Module 25</h1>
+        <p>Learn about Python File Handling</p>
+
+        <div class="module-box" id="module27">
+            <h2>Module 25: Python File Handling</h2>
+
+            <div class="topic-box">
+                <h3>Open a File</h3>
+                <p>Use the <code>open()</code> function to open a file. Modes: "r", "a", "w", "x".<br></p>
+                <code>f = open("demofile.txt", "r")<br>print(f.read())</code>
+            </div>
+            <div class="topic-box">
+                <h3>Read Parts of a File</h3>
+                <p>Read specific characters or lines using <code>read()</code> and <code>readline()</code>.<br></p>
+                <code>f = open("demofile.txt", "r")<br>print(f.read(5))<br>print(f.readline())</code>
+            </div>
+            <div class="topic-box">
+                <h3>Loop Through a File</h3>
+                <p>Loop through the lines of a file to read it line by line.<br></p>
+                <code>f = open("demofile.txt", "r")<br>for x in f:<br>    print(x)</code>
+            </div>
+            <div class="topic-box">
+                <h3>Close a File</h3>
+                <p>Always close a file using <code>close()</code> when done.<br></p>
+                <code>f = open("demofile.txt", "r")<br>print(f.readline())<br>f.close()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Write to a File</h3>
+                <p>Use "a" to append or "w" to overwrite content.<br></p>
+                <code>f = open("demofile2.txt", "a")<br>f.write("Now the file has more content!")<br>f.close()</code>
+            </div>
+            <div class="topic-box">
+                <h3>Create a File</h3>
+                <p>Use "x", "a", or "w" to create a new file.<br></p>
+                <code>f = open("myfile.txt", "x")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Delete a File</h3>
+                <p>Import the <code>os</code> module and use <code>os.remove()</code> to delete a file.<br></p>
+                <code>import os<br>os.remove("demofile.txt")</code>
+            </div>
+            <div class="topic-box">
+                <h3>Delete a Folder</h3>
+                <p>Use <code>os.rmdir()</code> to delete an empty folder.<br></p>
+                <code>import os<br>os.rmdir("myfolder")</code>
+            </div>
+
+            <textarea class="code-box" id="code-input27" placeholder="Write your Python code here..."></textarea>
+            <button class="syntax-button" onclick="checkSyntax(27)">Check Syntax</button>
+            <p id="feedback27"></p>
+            <div class="progress">Progress: <span id="progress27">0%</span></div>
+        </div>
+    </div>
+
+
+
+    
+    <script>
+        async function loadPyodideAndCheckSyntax(module) {
+            let pyodide = await loadPyodide();
+            let userCode = document.getElementById("code-input").value.trim();
+            let feedbackEl = document.getElementById("feedback" + module);
+            let module2El = document.getElementById("module2");
+            let progressEl = document.getElementById("progress" + module);
+
+            if (!userCode) {
+                if (feedbackEl) feedbackEl.innerHTML = "<span style='color:red;'>Please enter some code.</span>";
+                return;
+            }
+
+            try {
+                pyodide.runPython(userCode);
+                if (feedbackEl) feedbackEl.innerHTML = "<span class='completed'>Correct Syntax! Module 2 Unlocked.</span>";
+                if (module2El) module2El.classList.remove("locked");
+                if (progressEl) progressEl.innerText = "100%";
+            } catch (error) {
+                if (feedbackEl) feedbackEl.innerHTML = "<span style='color:red;'>Syntax Error: " + error.message + "</span>";
+            }
+        }
+
+        function checkSyntax(module) {
+            loadPyodideAndCheckSyntax(module);
+        }
+    </script>
+</body>
+</html>
