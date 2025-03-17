@@ -5,84 +5,112 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Python Course - Module 1</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://skulpt.org/js/skulpt.min.js"></script>
+    <script src="https://skulpt.org/js/skulpt-stdlib.js"></script>
+
     <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #3d0d1dff, #6d2932);
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            color: white;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-        .module-box {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 12px;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-            color: black;
-        }
-        .module-box:hover {
-            transform: scale(1.07);
-            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.4);
-        }
-        .topic-box {
-            background: #eee;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 10px;
-            text-align: left;
-        }
-        .code-box {
-            width: 100%;
-            height: 120px;
-            margin-top: 15px;
-            font-family: monospace;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px;
-            background: #f4f4f4;
-            resize: none;
-        }
-        .syntax-button {
-            background: #dcdcdc;
-            color: black;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: bold;
-            font-size: 1rem;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        .syntax-button:hover {
-            background: #e6e6e6;
-            transform: scale(1.08);
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
-        }
-        .progress {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 1.3em;
-        }
-        .locked {
-            opacity: 0.6;
-            pointer-events: none;
-            background: rgba(255, 255, 255, 0.5);
-        }
-        .completed {
-            color: green;
-            font-weight: bold;
-        }
-    </style>
+  <style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(to right, #f3e5d8, #e6dad5);
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        color: #3e2723;
+    }
+    .container {
+        max-width: 1400px;
+        margin: auto;
+        padding: 20px;
+        background-color: #f8f1eb;
+        border-radius: 8px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .module-box {
+        background: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 12px;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        color: #4e342e;
+        position: relative;
+        overflow: hidden;
+    }
+    .module-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, #a1887f, #795548);
+    }
+    .topic-box {
+        background: #fefaf5;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 10px;
+        text-align: left;
+        border-left: 6px solid #a1887f;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .code-box, #editor {
+        width: 100%;
+        height: 120px;
+        margin-top: 15px;
+        font-family: monospace;
+        border: 1px solid #bcaaa4;
+        border-radius: 8px;
+        padding: 10px;
+        background: #fcf8f3;
+        resize: none;
+        color: #3e2723;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+    }
+    #output {
+        width: 100%;
+        height: 150px;
+        background-color: #f8f1eb;
+        border: 1px solid #d1bfa7;
+        border-radius: 4px;
+        padding: 10px;
+        margin-top: 10px;
+        font-family: monospace;
+        color: #5a4a42;
+    }
+    button, .syntax-button {
+        background: linear-gradient(to right, #a1887f, #795548);
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: bold;
+        font-size: 1rem;
+        box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.2);
+    }
+    button:hover, .syntax-button:hover {
+        background: linear-gradient(to right, #8d6e63, #5d4037);
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    .progress {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 1.3em;
+    }
+    .locked {
+        opacity: 0.6;
+        pointer-events: none;
+        background: rgba(255, 255, 255, 0.5);
+    }
+    .completed {
+        color: #2d6a4f;
+        font-weight: bold;
+    }
+</style>
+    
 </head>
 <body>
     <div class="container">
@@ -93,6 +121,9 @@
             <h2>Module 1: Variables in Python</h2>
 
             <div class="topic-box">
+                <p><h4>What are Variables?</h4>
+
+In Python, a variable is like a named container that holds a value. This value can be of various data types, such as numbers, text, lists, and more. Essentially, variables provide a way to store and manipulate data within your programs.</p>
                 <h3>Dynamic Typing</h3>
                 <p>Variables do not need to be declared with any particular type, and can even change type after they have been set.</p>
             </div>
@@ -103,61 +134,11 @@
                     x = "Sally"  # x is now of type str<br>
                     print(x)
                 </code>
-                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://skulpt.org/js/skulpt.min.js"></script>
-    <script src="https://skulpt.org/js/skulpt-stdlib.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f0f2f5;
-        }
-        #editor {
-            width: 100%;
-            height: 300px;
-            margin-bottom: 10px;
-            font-family: monospace;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #1e1e1e;
-            color: #fff;
-        }
-        #output {
-            width: 100%;
-            height: 150px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 10px;
-            margin-top: 10px;
-            font-family: monospace;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
-<body>
     <div class="container">
-        <h1>Python Compiler</h1>
-        <textarea id="editor">print("Hello, World!")
-# Try your Python code here
-for i in range(5):
-    print(f"Count: {i}")</textarea>
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
         <br>
         <button onclick="runPython()">Run Code</button>
         <pre id="output"></pre>
@@ -209,6 +190,47 @@ for i in range(5):
                     print(type(x))<br>
                     print(type(y))
                 </code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
 
             <div class="topic-box">
@@ -233,6 +255,47 @@ for i in range(5):
                     a = 4<br>
                     A = "Sally"  # A will not overwrite a
                 </code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>2. Variable Names: Rules and Conventions</h3>
@@ -284,6 +347,47 @@ for i in range(5):
                     One value to multiple variables: <code>x = y = z = "Orange"</code><br>
                     Unpacking a collection: <code>fruits = ["apple", "banana", "cherry"]; x, y, z = fruits</code>
                 </p>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Outputting Variables: print()</h3>
@@ -300,6 +404,47 @@ for i in range(5):
                     <code>print(5 + 10)</code><br>
     <code>print(5, "John")</code> (Correct way to combine different types)
                 </p>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Global Variables</h3>
@@ -326,10 +471,47 @@ for i in range(5):
                 </p>
             </div>
 
-            <textarea class="code-box" id="code-input" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(1)">Check Syntax</button>
-            <p id="feedback1"></p>
-            <div class="progress">Progress: <span id="progress1">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
 
 
@@ -367,6 +549,47 @@ for i in range(5):
                 <h3>Getting the Data Type: type()</h3>
                 <p>Use <code>type()</code> to find the data type of a variable.<br></p>
                 <code>x = 5;<br> print(type(x))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Setting Data Types: Implicitly</h3>
@@ -385,22 +608,99 @@ for i in range(5):
             <div class="topic-box">
                 <h3>Example: Numeric Types</h3>
                 <code>x = 1;<br> y = 2.8;<br> z = 1j;<br> print(type(x));<br> print(type(y));<br> print(type(z))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Type Conversion</h3>
                 <p>Convert numeric types using <code>int()</code>, <code>float()</code>, <code>complex()</code>.<br></p>
                 <code>x = 1;<br> y = 2.8;<br> z = 1j;<br> a = float(x);<br> b = int(y);<br> c = complex(x);<br> print(a, b, c)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Random Numbers</h3>
                 <p>Use the <code>random</code> module to generate random numbers.<br></p>
                 <code>import random;<br> print(random.randrange(1, 10))</code>
             </div>
-
-            <textarea class="code-box" id="code-input2" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(2)">Check Syntax</button>
-            <p id="feedback2"></p>
-            <div class="progress">Progress: <span id="progress2">0%</span></div>
         </div>
     </div>
 
@@ -424,7 +724,7 @@ for i in range(5):
         <p>Learn about Python Casting</p>
 
         <div class="module-box" id="module3">
-            <h2>Module 3: Python Casting</h2>
+            <h1>Module 3: Python Casting</h1>
 
             <div class="topic-box">
                 <h3>Specify a Variable Type</h3>
@@ -446,10 +746,47 @@ for i in range(5):
                 <code>x = str("s1");<br> y = str(2);<br> z = str(3.0)</code>
             </div>
 
-            <textarea class="code-box" id="code-input3" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(3)">Check Syntax</button>
-            <p id="feedback3"></p>
-            <div class="progress">Progress: <span id="progress3">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
 
@@ -468,7 +805,7 @@ for i in range(5):
         <p>Learn about Python Strings</p>
 
         <div class="module-box" id="module4">
-            <h2>Module 4: Python Strings</h2>
+            <h1>Module 4: Python Strings</h1>
 
             <div class="topic-box">
                 <h3>Strings</h3>
@@ -479,6 +816,47 @@ for i in range(5):
                 <h3>Assigning Strings to Variables</h3>
                 <p>Assign strings with the variable name, equals sign, and the string.<br></p>
                 <code>a = "Hello"<br>print(a)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Multiline Strings</h3>
@@ -489,6 +867,47 @@ for i in range(5):
                 <h3>Strings as Arrays</h3>
                 <p>Strings are arrays of bytes representing Unicode characters. Use square brackets to access elements.<br></p>
                 <code>a = "Hello, World!"<br>print(a[1])</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Looping Through a String</h3>
@@ -499,22 +918,140 @@ for i in range(5):
                 <h3>String Length</h3>
                 <p>Use <code>len()</code> to get string length.<br></p>
                 <code>a = "Hello, World!"<br>print(len(a))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Check String: in</h3>
                 <p>Use <code>in</code> to check if a phrase is present.<br></p>
                 <code>txt = "The best things in life are free!"<br>print("free" in txt)<br><br>if "free" in txt:<br>print("Yes, 'free' is present.")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Check String: not in</h3>
                 <p>Use <code>not in</code> to check if a phrase is NOT present.<br></p>
                 <code>txt = "The best things in life are free!"<br>print("expensive" not in txt)<br><br>if "expensive" not in txt:<br>print("No, 'expensive' is NOT present.")</code>
-            </div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
 
-            <textarea class="code-box" id="code-input4" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(4)">Check Syntax</button>
-            <p id="feedback4"></p>
-            <div class="progress">Progress: <span id="progress4">0%</span></div>
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
+            </div>
         </div>
     </div>
 
@@ -559,10 +1096,47 @@ for i in range(5):
                 <code>b = "Hello, World!"<br>print(b[-5:-2])</code>
             </div>
 
-            <textarea class="code-box" id="code-input5" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(5)">Check Syntax</button>
-            <p id="feedback5"></p>
-            <div class="progress">Progress: <span id="progress5">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
 
@@ -583,32 +1157,191 @@ for i in range(5):
                 <h3>Upper Case</h3>
                 <p>The <code>upper()</code> method returns the string in upper case.<br></p>
                 <code>a = "Hello, World!"<br>print(a.upper())</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Lower Case</h3>
                 <p>The <code>lower()</code> method returns the string in lower case.<br></p>
                 <code>a = "Hello, World!"<br>print(a.lower())</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Remove Whitespace</h3>
                 <p>The <code>strip()</code> method removes whitespace from the beginning or end.<br></p>
                 <code>a = " Hello, World! "<br>print(a.strip()) # returns "Hello, World!"</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Replace String</h3>
                 <p>The <code>replace()</code> method replaces a string with another string.<br></p>
                 <code>a = "Hello, World!"<br>print(a.replace("H", "J"))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Split String</h3>
                 <p>The <code>split()</code> method splits the string into substrings based on a separator.<br></p>
                 <code>a = "Hello, World!"<br>print(a.split(",")) # returns ['Hello', ' World!']</code>
             </div>
-
-            <textarea class="code-box" id="code-input6" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(6)">Check Syntax</button>
-            <p id="feedback6"></p>
-            <div class="progress">Progress: <span id="progress6">0%</span></div>
         </div>
     </div>
 
@@ -633,11 +1366,93 @@ for i in range(5):
                 <h3>String Concatenation</h3>
                 <p>Use the <code>+</code> operator to combine strings.<br></p>
                 <code>a = "Hello"<br>b = "World"<br>c = a + " " + b<br>print(c)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>String Format</h3>
                 <p>Use the <code>format()</code> method to insert numbers into strings.<br></p>
                 <code>age = 36<br>txt = "My name is John, and I am {}"<br>print(txt.format(age))<br><br>quantity = 3<br>itemno = 567<br>price = 49.95<br>myorder = "I want to pay {2} dollars for {0} pieces of item {1}."<br>print(myorder.format(quantity, itemno, price))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Escape Characters</h3>
@@ -665,11 +1480,6 @@ for i in range(5):
                     <code>capitalize()</code>, <code>casefold()</code>, <code>center()</code>, <code>count()</code>, <code>encode()</code>, <code>endswith()</code>, <code>expandtabs()</code>, <code>find()</code>, <code>format()</code>, <code>format_map()</code>, <code>index()</code>, <code>isalnum()</code>, <code>isalpha()</code>, <code>isdecimal()</code>, <code>isdigit()</code>, <code>isidentifier()</code>, <code>islower()</code>, <code>isnumeric()</code>, <code>isprintable()</code>, <code>isspace()</code>, <code>istitle()</code>, <code>isupper()</code>, <code>join()</code>, <code>ljust()</code>, <code>lower()</code>, <code>lstrip()</code>, <code>maketrans()</code>, <code>partition()</code>, <code>replace()</code>, <code>rfind()</code>, <code>rindex()</code>, <code>rjust()</code>, <code>rpartition()</code>, <code>rsplit()</code>, <code>rstrip()</code>, <code>split()</code>, <code>splitlines()</code>, <code>startswith()</code>, <code>strip()</code>, <code>swapcase()</code>, <code>title()</code>, <code>translate()</code>, <code>upper()</code>, <code>zfill()</code>
                 </p>
             </div>
-
-            <textarea class="code-box" id="code-input7" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(7)">Check Syntax</button>
-            <p id="feedback7"></p>
-            <div class="progress">Progress: <span id="progress7">0%</span></div>
         </div>
     </div>
     
@@ -698,11 +1508,93 @@ for i in range(5):
                 <h3>Booleans in If Statements</h3>
                 <p>Booleans are used to control the flow of if statements.<br></p>
                 <code>a = 200<br>b = 33<br>if b > a:<br>    print("b is greater than a")<br>else:<br>    print("b is not greater than a")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Evaluate Values and Variables: bool()</h3>
                 <p>Use <code>bool()</code> to evaluate any value and get True or False.<br></p>
                 <code>print(bool("Hello"))<br>print(bool(15))<br><br>x = "Hello"<br>y = 15<br>print(bool(x))<br>print(bool(y))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Most Values are True</h3>
@@ -713,6 +1605,47 @@ for i in range(5):
                 <h3>Some Values are False</h3>
                 <p><code>False</code>, <code>None</code>, <code>0</code>, <code>""</code>, <code>()</code>, <code>[]</code>, <code>{}</code>, and objects with <code>__len__()</code> returning 0 or False are False.<br></p>
                 <code>bool(False)<br>bool(None)<br>bool(0)<br>bool("")<br>bool(())<br>bool([])<br>bool({})<br><br>class myclass():<br>    def __len__(self):<br>        return 0<br>myobj = myclass()<br>print(bool(myobj))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Functions Returning Booleans</h3>
@@ -725,10 +1658,47 @@ for i in range(5):
                 <code>x = 200<br>print(isinstance(x, int))</code>
             </div>
 
-            <textarea class="code-box" id="code-input8" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(8)">Check Syntax</button>
-            <p id="feedback8"></p>
-            <div class="progress">Progress: <span id="progress8">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -791,10 +1761,47 @@ for i in range(5):
                 <p><code>&</code> (AND), <code>|</code> (OR), <code>^</code> (XOR), <code>~</code> (NOT), <code><<</code> (Zero fill left shift), <code>>></code> (Signed right shift)<br></p>
             </div>
 
-            <textarea class="code-box" id="code-input9" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(9)">Check Syntax</button>
-            <p id="feedback9"></p>
-            <div class="progress">Progress: <span id="progress9">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -817,16 +1824,139 @@ for i in range(5):
                 <h3>Lists</h3>
                 <p>Lists store multiple items in a single variable, created using square brackets.<br></p>
                 <code>thislist = ["apple", "banana", "cherry"]<br>print(thislist)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>List Items</h3>
                 <p>Ordered, changeable, allow duplicates, indexed (first item [0]).<br></p>
                 <code>thislist = ["apple", "banana", "cherry", "apple", "cherry"]<br>print(thislist)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>List Length</h3>
                 <p>Use <code>len()</code> to get the number of items.<br></p>
                 <code>thislist = ["apple", "banana", "cherry"]<br>print(len(thislist))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>List Items - Data Types</h3>
@@ -847,6 +1977,47 @@ for i in range(5):
                 <h3>Access List Items</h3>
                 <p>Access items by index, negative index, or range.<br></p>
                 <code>thislist = ["apple", "banana", "cherry"]<br>print(thislist[1])<br>print(thislist[-1])<br>thislist = ["apple", "banana", "cherry", "orange", "kiwi", "melon", "mango"]<br>print(thislist[2:5])<br>print(thislist[:4])<br>print(thislist[2:])<br>print(thislist[-4:-1])</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Check if Item Exists</h3>
@@ -862,6 +2033,47 @@ for i in range(5):
                 <h3>Insert Items</h3>
                 <p>Use <code>insert()</code> to add items at a specified index.<br></p>
                 <code>thislist = ["apple", "banana", "cherry"]<br>thislist.insert(2, "watermelon")<br>print(thislist)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Append Items</h3>
@@ -883,10 +2095,47 @@ for i in range(5):
                 <p>Loop through lists using <code>for</code> loops, index numbers, <code>while</code> loops, or list comprehension.<br></p>
                 <code>thislist = ["apple", "banana", "cherry"]<br>for x in thislist:<br>    print(x)<br>thislist = ["apple", "banana", "cherry"]<br>for i in range(len(thislist)):<br>    print(thislist[i])<br>thislist = ["apple", "banana", "cherry"]<br>i = 0<br>while i < len(thislist):<br>    print(thislist[i])<br>    i = i + 1<br>thislist = ["apple", "banana", "cherry"]<br>[print(x) for x in thislist]</code>
             </div>
-            <textarea class="code-box" id="code-input10" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(10)">Check Syntax</button>
-            <p id="feedback10"></p>
-            <div class="progress">Progress: <span id="progress10">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -934,16 +2183,139 @@ for i in range(5):
                 <h3>Expression</h3>
                 <p>Manipulate items before adding to the new list.<br></p>
                 <code>newlist = [x.upper() for x in fruits]<br>newlist = ['hello' for x in fruits]<br>newlist = [x if x != "banana" else "orange" for x in fruits]</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>            
             </div>
             <div class="topic-box">
                 <h3>Sort Lists</h3>
                 <p>Use <code>sort()</code> to sort lists alphanumerically or numerically.<br></p>
                 <code>thislist = ["orange", "mango", "kiwi", "pineapple", "banana"]<br>thislist.sort()<br>print(thislist)<br>thislist = [100, 50, 65, 82, 23]<br>thislist.sort()<br>print(thislist)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Sort Descending</h3>
                 <p>Use <code>reverse = True</code> to sort in descending order.<br></p>
                 <code>thislist = ["orange", "mango", "kiwi", "pineapple", "banana"]<br>thislist.sort(reverse=True)<br>print(thislist)<br>thislist = [100, 50, 65, 82, 23]<br>thislist.sort(reverse=True)<br>print(thislist)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Customize Sort Function</h3>
@@ -975,10 +2347,47 @@ for i in range(5):
                 <p><code>append()</code>, <code>clear()</code>, <code>copy()</code>, <code>count()</code>, <code>extend()</code>, <code>index()</code>, <code>insert()</code>, <code>pop()</code>, <code>remove()</code>, <code>reverse()</code>, <code>sort()</code>.<br></p>
             </div>
 
-            <textarea class="code-box" id="code-input11" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(11)">Check Syntax</button>
-            <p id="feedback11"></p>
-            <div class="progress">Progress: <span id="progress11">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
 
@@ -1003,6 +2412,47 @@ for i in range(5):
                 <h3>Tuples</h3>
                 <p>Tuples store multiple items in a single variable, ordered and unchangeable, written with round brackets.<br></p>
                 <code>thistuple = ("apple", "banana", "cherry")<br>print(thistuple)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Tuple Items</h3>
@@ -1018,6 +2468,47 @@ for i in range(5):
                 <h3>Create Tuple With One Item</h3>
                 <p>Add a comma after the item.<br></p>
                 <code>thistuple = ("apple",)<br>print(type(thistuple))<br>thistuple = ("apple")<br>print(type(thistuple))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Tuple Items - Data Types</h3>
@@ -1038,11 +2529,93 @@ for i in range(5):
                 <h3>Access Tuple Items</h3>
                 <p>Access items by index, negative index, or range.<br></p>
                 <code>thistuple = ("apple", "banana", "cherry")<br>print(thistuple[1])<br>print(thistuple[-1])<br>thistuple = ("apple", "banana", "cherry", "orange", "kiwi", "melon", "mango")<br>print(thistuple[2:5])<br>print(thistuple[:4])<br>print(thistuple[2:])<br>print(thistuple[-4:-1])</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Check if Item Exists</h3>
                 <p>Use <code>in</code> to check if an item is present.<br></p>
                 <code>thistuple = ("apple", "banana", "cherry")<br>if "apple" in thistuple:<br>    print("Yes, 'apple' is in the fruits tuple")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Update Tuples</h3>
@@ -1053,11 +2626,93 @@ for i in range(5):
                 <h3>Add Items</h3>
                 <p>Convert to list, append, and convert back, or add tuple to tuple.<br></p>
                 <code>thistuple = ("apple", "banana", "cherry")<br>y = list(thistuple)<br>y.append("orange")<br>thistuple = tuple(y)<br>thistuple = ("apple", "banana", "cherry")<br>y = ("orange",)<br>thistuple += y<br>print(thistuple)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Remove Items</h3>
                 <p>Convert to list, remove, and convert back, or delete the tuple.<br></p>
                 <code>thistuple = ("apple", "banana", "cherry")<br>y = list(thistuple)<br>y.remove("apple")<br>thistuple = tuple(y)<br>thistuple = ("apple", "banana", "cherry")<br>del thistuple<br>print(thistuple) #error</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Unpack Tuples</h3>
@@ -1068,11 +2723,93 @@ for i in range(5):
                 <h3>Using Asterisk*</h3>
                 <p>Assign remaining values as a list.<br></p>
                 <code>fruits = ("apple", "banana", "cherry", "strawberry", "raspberry")<br>(green, yellow, *red) = fruits<br>print(green)<br>print(yellow)<br>print(red)<br>fruits = ("apple", "mango", "papaya", "pineapple", "cherry")<br>(green, *tropic, red) = fruits<br>print(green)<br>print(tropic)<br>print(red)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Loop Tuple</h3>
                 <p>Loop through tuples using <code>for</code> loops, index numbers, or <code>while</code> loops.<br></p>
                 <code>thistuple = ("apple", "banana", "cherry")<br>for x in thistuple:<br>    print(x)<br>thistuple = ("apple", "banana", "cherry")<br>for i in range(len(thistuple)):<br>    print(thistuple[i])<br>thistuple = ("apple", "banana", "cherry")<br>i = 0<br>while i < len(thistuple):<br>    print(thistuple[i])<br>    i = i + 1</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
         <p>Learn about Python Tuple Joining and Methods</p>
 
@@ -1091,10 +2828,47 @@ for i in range(5):
                 <p><code>count()</code>: Returns the number of times a specified value occurs in a tuple.<br>
                    <code>index()</code>: Searches the tuple for a specified value and returns the position of where it was found.<br></p>
             </div>
-            <textarea class="code-box" id="code-input12" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(12)">Check Syntax</button>
-            <p id="feedback12"></p>
-            <div class="progress">Progress: <span id="progress12">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
 
@@ -1119,6 +2893,47 @@ for i in range(5):
                 <h3>Sets</h3>
                 <p>Sets store multiple items in a single variable, unordered, unchangeable, and unindexed, written with curly brackets.<br></p>
                 <code>thisset = {"apple", "banana", "cherry"}<br>print(thisset)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Set Items</h3>
@@ -1129,6 +2944,47 @@ for i in range(5):
                 <h3>Get the Length of a Set</h3>
                 <p>Use <code>len()</code> to get the number of items.<br></p>
                 <code>thisset = {"apple", "banana", "cherry"}<br>print(len(thisset))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Set Items - Data Types</h3>
@@ -1154,11 +3010,93 @@ for i in range(5):
                 <h3>Add Set Items</h3>
                 <p>Use <code>add()</code> to add one item, <code>update()</code> to add items from another set or iterable.<br></p>
                 <code>thisset = {"apple", "banana", "cherry"}<br>thisset.add("orange")<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>tropical = {"pineapple", "mango", "papaya"}<br>thisset.update(tropical)<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>mylist = ["kiwi", "orange"]<br>thisset.update(mylist)<br>print(thisset)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Remove Set Items</h3>
                 <p>Use <code>remove()</code>, <code>discard()</code>, <code>pop()</code>, <code>clear()</code>, or <code>del</code> to remove items.<br></p>
                 <code>thisset = {"apple", "banana", "cherry"}<br>thisset.remove("banana")<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>thisset.discard("banana")<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>x = thisset.pop()<br>print(x)<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>thisset.clear()<br>print(thisset)<br>thisset = {"apple", "banana", "cherry"}<br>del thisset<br>print(thisset) #error</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Loop Sets</h3>
@@ -1175,10 +3113,47 @@ for i in range(5):
                 <p><code>add()</code>, <code>clear()</code>, <code>copy()</code>, <code>difference()</code>, <code>difference_update()</code>, <code>discard()</code>, <code>intersection()</code>, <code>intersection_update()</code>, <code>isdisjoint()</code>, <code>issubset()</code>, <code>issuperset()</code>, <code>pop()</code>, <code>remove()</code>, <code>symmetric_difference()</code>, <code>symmetric_difference_update()</code>, <code>union()</code>, <code>update()</code>.<br></p>
             </div>
 
-            <textarea class="code-box" id="code-input14" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(14)">Check Syntax</button>
-            <p id="feedback14"></p>
-            <div class="progress">Progress: <span id="progress14">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
 
@@ -1203,11 +3178,93 @@ for i in range(5):
                 <h3>Dictionaries</h3>
                 <p>Dictionaries store data in key:value pairs, ordered, changeable, and do not allow duplicates, written with curly brackets.<br></p>
                 <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(thisdict)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Dictionary Items</h3>
                 <p>Ordered, changeable, no duplicates, accessed by key name.<br></p>
                 <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(thisdict["brand"])</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Duplicates Not Allowed</h3>
@@ -1218,6 +3275,47 @@ for i in range(5):
                 <h3>Dictionary Length</h3>
                 <p>Use <code>len()</code> to get the number of items.<br></p>
                 <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(len(thisdict))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Dictionary Items - Data Types</h3>
@@ -1228,6 +3326,47 @@ for i in range(5):
                 <h3>type()</h3>
                 <p>Dictionaries are objects with the data type 'dict'.<br></p>
                 <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>print(type(thisdict))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>The dict() Constructor</h3>
@@ -1238,11 +3377,53 @@ for i in range(5):
                 <h3>Accessing Items</h3>
                 <p>Access items by key name or using <code>get()</code>.<br></p>
                 <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>x = thisdict["model"]<br>x = thisdict.get("model")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Get Keys</h3>
                 <p>Use <code>keys()</code> to get a list of keys.<br></p>
                 <code>thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}<br>x = thisdict.keys()</code>
+
             </div>
             <div class="topic-box">
                 <h3>Get Values</h3>
@@ -1288,6 +3469,47 @@ for i in range(5):
                 <h3>Nested Dictionaries</h3>
                 <p>Dictionaries can contain other dictionaries.<br></p>
                 <code>myfamily = {"child1": {"name": "Emil", "year": 2004}, "child2": {"name": "Tobias", "year": 2007}, "child3": {"name": "Linus", "year": 2011}}<br>child1 = {"name": "Emil", "year": 2004}<br>child2 = {"name": "Tobias", "year": 2007}<br>child3 = {"name": "Linus", "year": 2011}<br>myfamily = {"child1": child1, "child2": child2, "child3": child3}</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Dictionary Methods</h3>
@@ -1299,10 +3521,47 @@ for i in range(5):
                 <code>a = 33<br>b = 200<br>if b > a:<br>    print("b is greater than a")<br>a = 33<br>b = 33<br>if b > a:<br>    print("b is greater than a")<br>elif a == b:<br>    print("a and b are equal")<br>a = 200<br>b = 33<br>if b > a:<br>    print("b is greater than a")<br>elif a == b:<br>    print("a and b are equal")<br>else:<br>    print("a is greater than b")<br>if a > b: print("a is greater than b")<br>a = 2<br>b = 330<br>print("A") if a > b else print("B")<br>a = 330<br>b = 330<br>print("A") if a > b else print("=") if a == b else print("B")<br>a = 200<br>b = 33<br>c = 500<br>if a > b and c > a:<br>    print("Both conditions are True")<br>a = 200<br>b = 33<br>c = 500<br>if a > b or a > c:<br>    print("At least one of the conditions is True")<br>x = 41<br>if x > 10:<br>    print("Above ten,")<br>    if x > 20:<br>        print("and also above 20!")<br>    else:<br>        print("but not above 20.")<br>a = 33<br>b = 200<br>if b > a:<br>    pass</code>
             </div>
 
-            <textarea class="code-box" id="code-input15" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(15)">Check Syntax</button>
-            <p id="feedback15"></p>
-            <div class="progress">Progress: <span id="progress15">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
 
@@ -1325,66 +3584,512 @@ for i in range(5):
                 <h3>While Loop</h3>
                 <p>Execute a set of statements as long as a condition is true.<br></p>
                 <code>i = 1<br>while i < 6:<br>    print(i)<br>    i += 1</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Break Statement</h3>
                 <p>Stop the loop even if the while condition is true.<br></p>
                 <code>i = 1<br>while i < 6:<br>    print(i)<br>    if i == 3:<br>        break<br>    i += 1</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Continue Statement</h3>
                 <p>Stop the current iteration, and continue with the next.<br></p>
                 <code>i = 0<br>while i < 6:<br>    i += 1<br>    if i == 3:<br>        continue<br>    print(i)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Else Statement</h3>
                 <p>Run a block of code once when the condition is false.<br></p>
                 <code>i = 1<br>while i < 6:<br>    print(i)<br>    i += 1<br>else:<br>    print("i is no longer less than 6")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>For Loop</h3>
                 <p>Iterate over a sequence (list, tuple, dictionary, set, string).<br></p>
                 <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    print(x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Looping Through a String</h3>
                 <p>Strings are iterable objects.<br></p>
                 <code>for x in "banana":<br>    print(x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Break Statement (For Loop)</h3>
                 <p>Stop the loop before it has looped through all items.<br></p>
-                <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    print(x)<br>    if x == "banana":<br>        break<br>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    if x == "banana":<br>        break<br>    print(x)</code>
+                <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    print(x)<br>    if x == "banana":<br>        break<br>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    if x == "banana":<br>        break<br>    print(x)</code>    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Continue Statement (For Loop)</h3>
                 <p>Stop the current iteration and continue with the next.<br></p>
                 <code>fruits = ["apple", "banana", "cherry"]<br>for x in fruits:<br>    if x == "banana":<br>        continue<br>    print(x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Range() Function</h3>
                 <p>Loop through a set of code a specified number of times.<br></p>
                 <code>for x in range(6):<br>    print(x)<br>for x in range(2, 6):<br>    print(x)<br>for x in range(2, 30, 3):<br>    print(x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Else in For Loop</h3>
                 <p>Execute a block of code when the loop is finished.<br></p>
                 <code>for x in range(6):<br>    print(x)<br>else:<br>    print("Finally finished!")<br>for x in range(6):<br>    if x == 3: break<br>    print(x)<br>else:<br>    print("Finally finished!")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Nested Loops</h3>
                 <p>Loop inside a loop.<br></p>
                 <code>adj = ["red", "big", "tasty"]<br>fruits = ["apple", "banana", "cherry"]<br>for x in adj:<br>    for y in fruits:<br>        print(x, y)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Pass Statement</h3>
                 <p>Use <code>pass</code> to avoid getting an error in empty loops.<br></p>
                 <code>for x in [0, 1, 2]:<br>    pass</code>
             </div>
-            <textarea class="code-box" id="code-input15" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(15)">Check Syntax</button>
-            <p id="feedback15"></p>
-            <div class="progress">Progress: <span id="progress15">0%</span></div>
         </div>
     </div>            
             
@@ -1409,51 +4114,461 @@ for i in range(5):
                 <h3>Creating a Function</h3>
                 <p>Use the <code>def</code> keyword to define a function.<br></p>
                 <code>def my_function():<br>    print("Hello from a function")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Calling a Function</h3>
                 <p>Use the function name followed by parenthesis to call it.<br></p>
                 <code>def my_function():<br>    print("Hello from a function")<br>my_function()</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Arguments</h3>
                 <p>Pass information into functions as arguments.<br></p>
                 <code>def my_function(fname):<br>    print(fname + " Refsnes")<br>my_function("Emil")<br>my_function("Tobias")<br>my_function("Linus")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Number of Arguments</h3>
                 <p>Functions must be called with the correct number of arguments.<br></p>
                 <code>def my_function(fname, lname):<br>    print(fname + " " + lname)<br>my_function("Emil", "Refsnes")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Arbitrary Arguments, *args</h3>
                 <p>Use <code>*args</code> when you don't know how many arguments will be passed.<br></p>
                 <code>def my_function(*kids):<br>    print("The youngest child is " + kids[2])<br>my_function("Emil", "Tobias", "Linus")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Keyword Arguments</h3>
                 <p>Send arguments with the <code>key = value</code> syntax.<br></p>
                 <code>def my_function(child3, child2, child1):<br>    print("The youngest child is " + child3)<br>my_function(child1="Emil", child2="Tobias", child3="Linus")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Arbitrary Keyword Arguments, **kwargs</h3>
                 <p>Use <code>**kwargs</code> when you don't know how many keyword arguments will be passed.<br></p>
                 <code>def my_function(**kid):<br>    print("His last name is " + kid["lname"])<br>my_function(fname="Tobias", lname="Refsnes")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Default Parameter Value</h3>
                 <p>Use default values if the function is called without arguments.<br></p>
                 <code>def my_function(country="Norway"):<br>    print("I am from " + country)<br>my_function("Sweden")<br>my_function("India")<br>my_function()<br>my_function("Brazil")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Passing a List as an Argument</h3>
                 <p>Send any data type as an argument.<br></p>
                 <code>def my_function(food):<br>    for x in food:<br>        print(x)<br>fruits = ["apple", "banana", "cherry"]<br>my_function(fruits)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Return Values</h3>
                 <p>Use the <code>return</code> statement to return a value.<br></p>
                 <code>def my_function(x):<br>    return 5 * x<br>print(my_function(3))<br>print(my_function(5))<br>print(my_function(9))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Pass Statement</h3>
@@ -1465,10 +4580,6 @@ for i in range(5):
                 <p>A defined function can call itself.<br></p>
                 <code>def tri_recursion(k):<br>    if(k > 0):<br>        result = k + tri_recursion(k - 1)<br>        print(result)<br>    else:<br>        result = 0<br>    return result<br>print("\n\nRecursion Example Results")<br>tri_recursion(6)</code>
             </div>
-            <textarea class="code-box" id="code-input15" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(15)">Check Syntax</button>
-            <p id="feedback15"></p>
-            <div class="progress">Progress: <span id="progress15">0%</span></div>
         </div>
     </div>        
     
@@ -1507,11 +4618,47 @@ for i in range(5):
                 <code>def myfunc(n):<br>    return lambda a : a * n<br>mydoubler = myfunc(2)<br>print(mydoubler(11))<br>mytripler = myfunc(3)<br>print(mytripler(11))<br>mydoubler = myfunc(2)<br>mytripler = myfunc(3)<br>print(mydoubler(11))<br>print(mytripler(11))</code>
             </div>
 
-            <textarea class="code-box" id="code-input18" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(18)">Check Syntax</button>
-            <p id="feedback18"></p>
-            <div class="progress">Progress: <span id="progress18">0%</span></div>
-        </div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
     </div>
 
 
@@ -1522,7 +4669,7 @@ for i in range(5):
 
 
 
-    <div class="container">
+
         <div class="module-box locked" id="module18">
             <h2>Module 18 - Coming Soon</h2>
             <p>Complete Module 17 to unlock this!</p>
@@ -1541,36 +4688,236 @@ for i in range(5):
                 <h3>Access Elements</h3>
                 <p>Access array elements by referring to the index number.<br></p>
                 <code>cars = ["Ford", "Volvo", "BMW"]<br>x = cars[0]<br>cars[0] = "Toyota"</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Length of an Array</h3>
                 <p>Use the <code>len()</code> method to return the length of an array.<br></p>
                 <code>cars = ["Ford", "Volvo", "BMW"]<br>x = len(cars)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Looping Array Elements</h3>
                 <p>Use a <code>for</code> loop to loop through all elements of an array.<br></p>
                 <code>cars = ["Ford", "Volvo", "BMW"]<br>for x in cars:<br>    print(x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Adding Array Elements</h3>
                 <p>Use the <code>append()</code> method to add an element to an array.<br></p>
                 <code>cars = ["Ford", "Volvo", "BMW"]<br>cars.append("Honda")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Removing Array Elements</h3>
                 <p>Use the <code>pop()</code> or <code>remove()</code> method to remove an element from an array.<br></p>
                 <code>cars = ["Ford", "Volvo", "BMW"]<br>cars.pop(1)<br>cars.remove("Volvo")</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Array Methods</h3>
                 <p><code>append()</code>, <code>clear()</code>, <code>copy()</code>, <code>count()</code>, <code>extend()</code>, <code>index()</code>, <code>insert()</code>, <code>pop()</code>, <code>remove()</code>, <code>reverse()</code>, <code>sort()</code>.<br></p>
             </div>
-
-            <textarea class="code-box" id="code-input19" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(19)">Check Syntax</button>
-            <p id="feedback19"></p>
-            <div class="progress">Progress: <span id="progress19">0%</span></div>
         </div>
     </div>
 
@@ -1599,26 +4946,231 @@ for i in range(5):
                 <h3>Create Object</h3>
                 <p>Use the class name to create objects.<br></p>
                 <code>class MyClass:<br>    x = 5<br>p1 = MyClass()<br>print(p1.x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>The __init__() Function</h3>
                 <p>Use the <code>__init__()</code> function to assign values to object properties.<br></p>
                 <code>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br>p1 = Person("John", 36)<br>print(p1.name)<br>print(p1.age)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>The __str__() Function</h3>
                 <p>Use the <code>__str__()</code> function to control what should be returned when the object is represented as a string.<br></p>
                 <code>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br>    def __str__(self):<br>        return f"{self.name}({self.age})"<br>p1 = Person("John", 36)<br>print(p1)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Object Methods</h3>
                 <p>Methods in objects are functions that belong to the object.<br></p>
                 <code>class Person:<br>    def __init__(self, name, age):<br>        self.name = name<br>        self.age = age<br>    def myfunc(self):<br>        print("Hello my name is " + self.name)<br>p1 = Person("John", 36)<br>p1.myfunc()</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>The self Parameter</h3>
                 <p>The <code>self</code> parameter is a reference to the current instance of the class.<br></p>
                 <code>class Person:<br>    def __init__(mysillyobject, name, age):<br>        mysillyobject.name = name<br>        mysillyobject.age = age<br>    def myfunc(abc):<br>        print("Hello my name is " + abc.name)<br>p1 = Person("John", 36)<br>p1.myfunc()</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Modify Object Properties</h3>
@@ -1641,10 +5193,47 @@ for i in range(5):
                 <code>class Person:<br>    pass</code>
             </div>
 
-            <textarea class="code-box" id="code-input20" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(20)">Check Syntax</button>
-            <p id="feedback20"></p>
-            <div class="progress">Progress: <span id="progress20">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -1669,21 +5258,185 @@ for i in range(5):
                 <h3>Create a Parent Class</h3>
                 <p>Create a class that can be inherited from.<br></p>
                 <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>x = Person("John", "Doe")<br>x.printname()</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Create a Child Class</h3>
                 <p>Create a class that inherits from a parent class.<br></p>
                 <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    pass<br>x = Student("Mike", "Olsen")<br>x.printname()</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Add the __init__() Function</h3>
                 <p>Add the <code>__init__()</code> function to the child class.<br></p>
                 <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname):<br>        Person.__init__(self, fname, lname)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Use the super() Function</h3>
                 <p>Use the <code>super()</code> function to inherit methods and properties from the parent.<br></p>
                 <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname):<br>        super().__init__(fname, lname)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Add Properties</h3>
@@ -1696,10 +5449,47 @@ for i in range(5):
                 <code>class Person:<br>    def __init__(self, fname, lname):<br>        self.firstname = fname<br>        self.lastname = lname<br>    def printname(self):<br>        print(self.firstname, self.lastname)<br>class Student(Person):<br>    def __init__(self, fname, lname, year):<br>        super().__init__(fname, lname)<br>        self.graduationyear = year<br>    def welcome(self):<br>        print("Welcome", self.firstname, self.lastname, "to the class of", self.graduationyear)</code>
             </div>
 
-            <textarea class="code-box" id="code-input21" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(21)">Check Syntax</button>
-            <p id="feedback21"></p>
-            <div class="progress">Progress: <span id="progress21">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -1724,21 +5514,185 @@ for i in range(5):
                 <h3>Iterator vs Iterable</h3>
                 <p>Lists, tuples, dictionaries, and sets are iterable objects. An iterator is an object that can be iterated upon.<br></p>
                 <code>mytuple = ("apple", "banana", "cherry")<br>myit = iter(mytuple)<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Strings as Iterables</h3>
                 <p>Strings are also iterable objects, containing a sequence of characters.<br></p>
                 <code>mystr = "banana"<br>myit = iter(mystr)<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))<br>print(next(myit))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Looping Through an Iterator</h3>
                 <p>Use a <code>for</code> loop to iterate through an iterable object.<br></p>
                 <code>mytuple = ("apple", "banana", "cherry")<br>for x in mytuple:<br>    print(x)<br>mystr = "banana"<br>for x in mystr:<br>    print(x)</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>Create an Iterator</h3>
                 <p>Implement the <code>__iter__()</code> and <code>__next__()</code> methods to create an iterator.<br></p>
                 <code>class MyNumbers:<br>    def __iter__(self):<br>        self.a = 1<br>        return self<br>    def __next__(self):<br>        x = self.a<br>        self.a += 1<br>        return x<br>myclass = MyNumbers()<br>myiter = iter(myclass)<br>print(next(myiter))<br>print(next(myiter))<br>print(next(myiter))<br>print(next(myiter))<br>print(next(myiter))</code>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
             </div>
             <div class="topic-box">
                 <h3>StopIteration</h3>
@@ -1746,10 +5700,47 @@ for i in range(5):
                 <code>class MyNumbers:<br>    def __iter__(self):<br>        self.a = 1<br>        return self<br>    def __next__(self):<br>        if self.a <= 20:<br>            x = self.a<br>            self.a += 1<br>            return x<br>        else:<br>            raise StopIteration<br>myclass = MyNumbers()<br>myiter = iter(myclass)<br>for x in myiter:<br>    print(x)</code>
             </div>
 
-            <textarea class="code-box" id="code-input22" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(22)">Check Syntax</button>
-            <p id="feedback22"></p>
-            <div class="progress">Progress: <span id="progress22">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -1797,10 +5788,47 @@ for i in range(5):
                 <code>def myfunc():<br>    global x<br>    x = 300<br>myfunc()<br>print(x)<br>x = 300<br>def myfunc():<br>    global x<br>    x = 200<br>myfunc()<br>print(x)</code>
             </div>
 
-            <textarea class="code-box" id="code-input23" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(23)">Check Syntax</button>
-            <p id="feedback23"></p>
-            <div class="progress">Progress: <span id="progress23">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
     
@@ -1863,10 +5891,47 @@ for i in range(5):
                 <code># mymodule.py<br>def greeting(name):<br>    print("Hello, " + name)<br>person1 = {<br>    "name": "John",<br>    "age": 36,<br>    "country": "Norway"<br>}<br>from mymodule import person1<br>print(person1["age"])</code>
             </div>
 
-            <textarea class="code-box" id="code-input24" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(24)">Check Syntax</button>
-            <p id="feedback24"></p>
-            <div class="progress">Progress: <span id="progress24">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
  
@@ -1910,6 +5975,7 @@ for i in range(5):
             <div class="topic-box">
                 <h3>Format Codes</h3>
                 <p>Reference of legal format codes: <code>%a</code>, <code>%A</code>, <code>%w</code>, <code>%d</code>, <code>%b</code>, <code>%B</code>, <code>%m</code>, <code>%y</code>, <code>%Y</code>, <code>%H</code>, <code>%I</code>, <code>%p</code>, <code>%M</code>, <code>%S</code>, <code>%f</code>, <code>%z</code>, <code>%Z</code>, <code>%j</code>, <code>%U</code>, <code>%W</code>, <code>%c</code>, <code>%C</code>, <code>%x</code>, <code>%X</code>, <code>%%</code>, <code>%G</code>, <code>%u</code>, <code>%V</code>.<br></p>
+
             </div>
             <div class="topic-box">
                 <h3>Built-in Math Functions</h3>
@@ -1941,10 +6007,47 @@ for i in range(5):
                 <p>Use named indexes inside curly brackets and pass named parameters to <code>format()</code>.<br></p>
                 <code>myorder = "I have a {carname}, it is a {model}."<br>print(myorder.format(carname = "Ford", model = "Mustang"))</code>
             </div>
-            <textarea class="code-box" id="code-input25" placeholder="Write your Python code here..."></textarea>
-            <button class="syntax-button" onclick="checkSyntax(25)">Check Syntax</button>
-            <p id="feedback25"></p>
-            <div class="progress">Progress: <span id="progress25">0%</span></div>
+    <div class="container">
+        <h1>TRY YOUR OWN </h1>
+        <textarea id="editor">
+  # Try your Python code here
+        </textarea>
+        <br>
+        <button onclick="runPython()">Run Code</button>
+        <pre id="output"></pre>
+    </div>
+
+    <script>
+        function outf(text) {
+            var output = document.getElementById("output");
+            output.innerHTML = output.innerHTML + text;
+        }
+
+        function builtinRead(x) {
+            if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+                throw "File not found: '" + x + "'";
+            return Sk.builtinFiles["files"][x];
+        }
+
+        function runPython() {
+            var prog = document.getElementById("editor").value;
+            var output = document.getElementById("output");
+            output.innerHTML = '';
+
+            Sk.pre = "output";
+            Sk.configure({
+                output: outf,
+                read: builtinRead,
+                __future__: Sk.python3
+            });
+
+            try {
+                Sk.importMainWithBody("<stdin>", false, prog, true);
+            } catch (e) {
+                output.innerHTML = e.toString();
+            }
+        }
+    </script>
         </div>
     </div>
  
@@ -2049,3 +6152,4 @@ for i in range(5):
     </script>
 </body>
 </html>
+
